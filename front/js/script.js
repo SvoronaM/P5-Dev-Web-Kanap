@@ -8,7 +8,7 @@ fetch('http://localhost:3000/api/products')
     })
 
     .catch(_error => {
-        alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.')
+        alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.')
     })
 
 
