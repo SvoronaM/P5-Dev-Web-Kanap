@@ -13,7 +13,7 @@ fetch('http://localhost:3000/api/products')
 
 //Affichage tous les produit
 function showProducts(data) {
-//product de la promise
+//product
     for (product of data) {
 //élément items dans index.html
         const itemCard = document.getElementById('items')
