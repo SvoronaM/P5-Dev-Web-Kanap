@@ -16,13 +16,13 @@ fetch(requestURL)
         // je modifie le contenu de chaque variable avec les bonnes données :
         function showProduct(data) {
             document.title = data.name;
-            let panelIMG = document.querySelector('.item__img');
+            let panelImages = document.querySelector('.item__img');
 
             // insertion image du canapé
-            var createPict = document.createElement('img');
+            let createPict = document.createElement('img');
             createPict.setAttribute('src', data.imageUrl);
             createPict.setAttribute('alt', data.altTxt);
-            panelIMG.appendChild(createPict);
+            panelImages.appendChild(createPict);
 
             // insertion du nom du canapé
             let panelH1 = document.querySelector('#title');
