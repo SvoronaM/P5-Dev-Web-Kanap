@@ -40,7 +40,7 @@ fetch("http://localhost:3000/api/products/" + newID)
     })
     // j'ajoute un message au cas où le serveur ne répond pas
     .catch(_error => {
-        alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.');
+        alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.');
     });
 
 //---------JE RECUPERE LES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR---------
