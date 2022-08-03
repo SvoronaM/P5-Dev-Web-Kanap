@@ -1,47 +1,56 @@
-//---------JE REDIRIGE L'URL DE L'API---------
+let string = window.location.href;
+let url = new URL(string);
+let idURL = url.searchParams.get("id");
 
-// je crée une nouvelle url à partir de l'url actuelle
-// et en ajoutant searchParams pour manipuler les paramètres de requête d'URL :
-let params = new URL(window.location.href).searchParams;
-// j'indique que la nouvelle url sera ajoutée d'un id :
-let newID = params.get('id');
-
-//---------J'APPELLE DE NOUVEAU L'API AVEC L'ID DU CANAPE CHOISI---------
-
-// je crée les variables dont j'ai besoin pour manipuler cette page :
-const image = document.getElementsByClassName('item__img');
-const title = document.getElementById('title');
-const price = document.getElementById('price');
-const description = document.getElementById('description');
-const colors = document.getElementById('colors');
-
-let imageURL = "";
-let imageAlt = "";
-
-// je crée la bonne URL pour chaque produit choisi en ajoutant newID
-fetch("http://localhost:3000/api/products/" + newID)
-    .then(res => res.json())
-    .then(data => {
-        // je modifie le contenu de chaque variable avec les bonnes données :
-        image[0].innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
-        imageURL = data.imageUrl;
-        imageAlt = data.altTxt;
-        title.innerHTML = `<h1>${data.name}</h1>`;
-        price.innerText = `${data.price}`;
-        description.innerText = `${data.description}`;
-
-        // je configure le choix des couleurs
-        for (number in data.colors) {
-            colors.options[colors.options.length] = new Option(
-                data.colors[number],
-                data.colors[number]
-            );
-        }
+// Appel API avec l'id du produit
+let productUnit = "";
+let requestURL = "http://localhost:3000/api/products/" + idURL
+fetch(requestURL)
+    .then(response => response.json())
+    .then(async function (resultatAPI) {
+        productUnit = await resultatAPI;
+        showProduct(productUnit);
     })
     // j'ajoute un message au cas où le serveur ne répond pas
-    .catch(_error => {
-        alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.');
-    });
+    .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error));
+        // je modifie le contenu de chaque variable avec les bonnes données :
+        function showProduct(data) {
+            document.title = data.name;
+            let panelIMG = document.querySelector('.item__img');
+
+            // insertion image du canapé
+            var createPict = document.createElement('img');
+            createPict.setAttribute('src', data.imageUrl);
+            createPict.setAttribute('alt', data.altTxt);
+            panelIMG.appendChild(createPict);
+
+            // insertion du nom du canapé
+            let panelH1 = document.querySelector('#title');
+            panelH1.textContent = data.name;
+
+            // insertion du prix du canapé
+            let panelPrice = document.querySelector('#price');
+            panelPrice.textContent =data.price;
+
+            // insertion du choix du canapé
+            let panelDescription = document.querySelector('#description');
+            panelDescription.textContent = data.description;
+
+            // récupération de #colors
+            let panelOption = document.querySelector('#colors');
+
+            // insertion du tableau des couleurs dans une variable
+            let colors = data.colors;
+
+            // parcours du tableau de couleurs et insertion de celles-ci dans choix
+            for (let i = 0; i < colors.length; i++){
+                let colorProduct = colors[i];
+                let createOption = document.createElement('option');
+                createOption.setAttribute('value', colorProduct);
+                createOption.textContent = colorProduct;
+                panelOption.appendChild(createOption);
+            }
+        }
 
 //---------JE RECUPERE LES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR---------
 
