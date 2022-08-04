@@ -64,7 +64,7 @@ addToCart.addEventListener('click', (event) => {
 
     const selection = {
         id: newID,
-        image: imageURL,
+        image: imageUrl,
         alt: imageAlt,
         name: title.textContent,
         price: price.textContent,
