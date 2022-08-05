@@ -11,7 +11,7 @@ fetch(requestURL)
         productUnit = await resultatAPI;
         showProduct(productUnit);
     })
-    // j'ajoute un message au cas où le serveur ne répond pas
+    // ajoute un message au cas où le serveur ne répond pas
     .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error));
         // je modifie le contenu de chaque variable avec les bonnes données :
         function showProduct(data) {
@@ -42,7 +42,7 @@ fetch(requestURL)
             // insertion du tableau des couleurs dans une variable
             let colors = data.colors;
 
-            // parcours du tableau de couleurs et insertion de celles-ci dans choix
+            // parcour du tableau des couleurs et insertion de celles-ci dans choix
             for (let i = 0; i < colors.length; i++){
                 let colorProduct = colors[i];
                 let createOption = document.createElement('option');
@@ -52,12 +52,12 @@ fetch(requestURL)
             }
         }
 
-//---------JE RECUPERE LES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR---------
+//     RECUPERATION DES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR
 
 const selectQuantity = document.getElementById('quantity');
 const selectColors = document.getElementById('colors');
 
-// je configure un eventListener quand l'utilisateur clique sur ajouter au panier
+// configuration un eventListener quand l'utilisateur clique sur ajouter au panier
 const addToCart = document.getElementById('addToCart');
 addToCart.addEventListener('click', (event) => {
     event.preventDefault();
@@ -77,9 +77,9 @@ addToCart.addEventListener('click', (event) => {
     // JSON.parse permet de convertir les données au format JSON en objet JavaScript
     let productInLocalStorage =  JSON.parse(localStorage.getItem('product'));
 
-    // j'ajoute les produits sélectionnés dans le localStorage
+    // Ajoute les produits sélectionnés dans le localStorage
     const addProductLocalStorage = () => {
-        // je récupère la sélection de l'utilisateur dans le tableau de l'objet :
+        // récupère la sélection de l'utilisateur dans le tableau de l'objet :
         // on peut voir dans la console qu'il y a les données,
         // mais pas encore stockées dans le storage à ce stade
 
@@ -119,7 +119,7 @@ addToCart.addEventListener('click', (event) => {
 
     // s'il n'y a aucun produit enregistré dans le localStorage
     else {
-        // je crée alors un tableau avec les éléments choisi par l'utilisateur
+        // création un tableau avec les éléments choisi par l'utilisateur
         productInLocalStorage = [];
         addProductLocalStorage();
         addConfirm();
