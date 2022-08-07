@@ -64,20 +64,19 @@ addToCart.addEventListener('click', (event) => {
     let productInLocalStorage =  JSON.parse(localStorage.getItem('product'));
     // Ajoute les produits sélectionnés dans le localStorage
     const addProductLocalStorage = () => {
-        // récupère la sélection de l'utilisateur dans le tableau de l'objet :
+        // récupèration de la sélection de l'utilisateur dans le tableau de l'objet :
         productInLocalStorage.push(selection);
-        // je stocke les données récupérées dans le localStorage :
+        // stockage des données récupérées dans le localStorage :
         localStorage.setItem('product', JSON.stringify(productInLocalStorage));
     }
-    // je crée une boîte de dialogue pour confirmer l'ajout au panier
+    // création d'une boîte de dialogue pour confirmer l'ajout au panier
     let addConfirm = () => {
         alert('Le produit a bien été ajouté au panier');
     }
     let update = false;
     // s'il y a des produits enregistrés dans le localStorage
     if (productInLocalStorage) {
-        // verifier que le produit ne soit pas deja dans le localstorage/panier
-        // avec la couleur
+        // verification que le produit ne soit pas deja dans le localstorage/panier
         productInLocalStorage.forEach (function (productOk, key) {
             if (productOk.id == newID && productOk.color == selectColors.value) {
                 productInLocalStorage[key].quantity = parseInt(productOk.quantity) + parseInt(selectQuantity.value);
