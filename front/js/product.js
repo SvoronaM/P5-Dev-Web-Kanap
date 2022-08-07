@@ -1,7 +1,6 @@
 let string = window.location.href;
 let url = new URL(string);
 let idURL = url.searchParams.get("id");
-
 // Appel API avec l'id du produit
 let productUnit = "";
 let requestURL = "http://localhost:3000/api/products/" + idURL
@@ -17,31 +16,24 @@ fetch(requestURL)
         function showProduct(data) {
             document.title = data.name;
             let panelImages = document.querySelector('.item__img');
-
             // insertion image du canapé
             let createPict = document.createElement('img');
             createPict.setAttribute('src', data.imageUrl);
             createPict.setAttribute('alt', data.altTxt);
             panelImages.appendChild(createPict);
-
             // insertion du nom du canapé
             let panelH1 = document.querySelector('#title');
             panelH1.textContent = data.name;
-
             // insertion du prix du canapé
             let panelPrice = document.querySelector('#price');
             panelPrice.textContent =data.price;
-
             // insertion du choix du canapé
             let panelDescription = document.querySelector('#description');
             panelDescription.textContent = data.description;
-
             // récupération de #colors
             let panelOption = document.querySelector('#colors');
-
             // insertion du tableau des couleurs dans une variable
             let colors = data.colors;
-
             // parcour du tableau des couleurs et insertion de celles-ci dans choix
             for (let i = 0; i < colors.length; i++){
                 let colorProduct = colors[i];
@@ -51,12 +43,9 @@ fetch(requestURL)
                 panelOption.appendChild(createOption);
             }
         }
-
 //     RECUPERATION DES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR
-
 const selectQuantity = document.getElementById('quantity');
 const selectColors = document.getElementById('colors');
-
 // configuration un eventListener quand l'utilisateur clique sur ajouter au panier
 const addToCart = document.getElementById('addToCart');
 addToCart.addEventListener('click', (event) => {
@@ -71,32 +60,20 @@ addToCart.addEventListener('click', (event) => {
         color: selectColors.value,
         quantity: selectQuantity.value,
     };
-
     // je déclare une variable productInLocalStorage
-    // dans laquelle je mets les clés+valeurs dans le local storage
-    // JSON.parse permet de convertir les données au format JSON en objet JavaScript
     let productInLocalStorage =  JSON.parse(localStorage.getItem('product'));
-
     // Ajoute les produits sélectionnés dans le localStorage
     const addProductLocalStorage = () => {
         // récupère la sélection de l'utilisateur dans le tableau de l'objet :
-        // on peut voir dans la console qu'il y a les données,
-        // mais pas encore stockées dans le storage à ce stade
-
         productInLocalStorage.push(selection);
         // je stocke les données récupérées dans le localStorage :
-        // JSON.stringify permet de convertir les données au format JavaScript en JSON
-        // vérifier que key et value dans l'inspecteur contiennent bien des données
         localStorage.setItem('product', JSON.stringify(productInLocalStorage));
     }
-
     // je crée une boîte de dialogue pour confirmer l'ajout au panier
     let addConfirm = () => {
         alert('Le produit a bien été ajouté au panier');
     }
-
     let update = false;
-
     // s'il y a des produits enregistrés dans le localStorage
     if (productInLocalStorage) {
         // verifier que le produit ne soit pas deja dans le localstorage/panier
@@ -109,14 +86,11 @@ addToCart.addEventListener('click', (event) => {
                 addConfirm();
             }
         });
-
-        //
         if (!update) {
             addProductLocalStorage();
             addConfirm();
         }
     }
-
     // s'il n'y a aucun produit enregistré dans le localStorage
     else {
         // création un tableau avec les éléments choisi par l'utilisateur
