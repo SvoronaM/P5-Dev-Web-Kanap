@@ -12,7 +12,7 @@ fetch(requestURL)
     })
     // ajoute un message au cas où le serveur ne répond pas
     .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error))
-        // je modifie le contenu de chaque variable avec les bonnes données :
+        // modification de contenu de chaque variable avec les bonnes données :
         function showProduct(data) {
             document.title = data.name
             let panelImages = document.querySelector('.item__img')
