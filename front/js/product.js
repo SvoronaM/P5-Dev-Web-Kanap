@@ -11,7 +11,7 @@ fetch(requestURL)
         productUnit = await resultatAPI
         showProduct(productUnit)
     })
-    // Ajoute un message au cas où le serveur ne répond pas
+    // Message au cas où le serveur ne répond pas
     .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error))
         // Modification de contenu de chaque variable avec les bonnes données :
         function showProduct(data) {
@@ -44,7 +44,8 @@ fetch(requestURL)
                 panelOption.appendChild(createOption)
             }
         }
-//     RECUPERATION DES DONNEES PAR RAPPORT AU CHOIX DE L'UTILISATEUR
+
+//     Récupération des donnes par rapport au choix de l'utilisateur
 const selectQuantity = document.getElementById('quantity')
 const selectColors = document.getElementById('colors')
 // Configuration un eventListener quand l'utilisateur clique sur ajouter au panier
@@ -61,7 +62,7 @@ addToCart.addEventListener('click', (event) => {
         color: selectColors.value,
         quantity: selectQuantity.value,
     }
-    // Je déclare une variable productInLocalStorage
+    // Déclaration variable productInLocalStorage
     let productInLocalStorage =  JSON.parse(localStorage.getItem('product'))
     // Ajoute les produits sélectionnés dans le localStorage
     const addProductLocalStorage = () => {
