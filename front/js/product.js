@@ -3,40 +3,39 @@ let string = window.location.href
 let url = new URL(string)
 let idURL = url.searchParams.get("id")
 // Appel API avec l'id du produit
-let productUnit = ""
 let requestURL = "http://localhost:3000/api/products/" + idURL
 fetch(requestURL)
     .then(response => response.json())
     .then(async function (resultatAPI) {
-        productUnit = await resultatAPI
+        let  productUnit = await resultatAPI
         showProduct(productUnit)
     })
     // Message au cas où le serveur ne répond pas
     .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error))
         // Modification de contenu de chaque variable avec les bonnes données :
-        function showProduct(data) {
-            document.title = data.name
-            let panelImages = document.querySelector('.item__img')
+function showProduct(data) {
+    document.title = data.name
+    let panelImages = document.querySelector('.item__img')
             // Insertion image du canapé
-            let createPict = document.createElement('img')
-            createPict.setAttribute('src', data.imageUrl)
-            createPict.setAttribute('alt', data.altTxt)
-            panelImages.appendChild(createPict)
+    let createPict = document.createElement('img')
+    createPict.setAttribute('src', data.imageUrl)
+    createPict.setAttribute('alt', data.altTxt)
+    panelImages.appendChild(createPict)
             // Insertion du nom du canapé
-            let panelH1 = document.querySelector('#title')
-            panelH1.textContent = data.name
+    let panelH1 = document.querySelector('#title')
+    panelH1.textContent = data.name
             // Insertion du prix du canapé
-            let panelPrice = document.querySelector('#price')
-            panelPrice.textContent =data.price
+    let panelPrice = document.querySelector('#price')
+    panelPrice.textContent =data.price
             // Insertion du choix du canapé
-            let panelDescription = document.querySelector('#description')
-            panelDescription.textContent = data.description
+     let panelDescription = document.querySelector('#description')
+      panelDescription.textContent = data.description
             // Récupération de #colors
-            let panelOption = document.querySelector('#colors')
+      let panelOption = document.querySelector('#colors')
             // Insertion du tableau des couleurs dans une variable
-            let colors = data.colors
+      let colors = data.colors
             // Parcour du tableau des couleurs et insertion de celles-ci dans choix
-            for (let i = 0; i < colors.length; i++){
+      for (let i = 0; i < colors.length; i++){
                 let colorProduct = colors[i]
                 let createOption = document.createElement('option')
                 createOption.setAttribute('value', colorProduct)
@@ -66,9 +65,9 @@ addToCart.addEventListener('click', (event) => {
     // Ajoute les produits sélectionnés dans le localStorage
     const addProductLocalStorage = () => {
         // Récupèration de la sélection de l'utilisateur dans le tableau de l'objet :
-        productInLocalStorage.push(selection)
+    productInLocalStorage.push(selection)
         // Stockage des données récupérées dans le localStorage :
-        localStorage.setItem('product', JSON.stringify(productInLocalStorage))
+    localStorage.setItem('product', JSON.stringify(productInLocalStorage))
     }
     // Création d'une boîte de dialogue pour confirmer l'ajout au panier
     let addConfirm = () => {
