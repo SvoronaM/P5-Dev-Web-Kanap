@@ -52,7 +52,6 @@ const selectColors = document.getElementById('colors')
 const addToCart = document.getElementById('addToCart')
 addToCart.addEventListener('click', (event) => {
     event.preventDefault();
-
     const selection = {
         id: newID,
         image: imageUrl,
