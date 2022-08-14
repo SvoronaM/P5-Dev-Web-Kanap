@@ -11,7 +11,7 @@ fetch(requestURL)
         showProduct(productUnit)
     })
     // Message au cas où le serveur ne répond pas
-    .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le READ.me.' + error))
+    .catch(error => alert('Le serveur ne répond pas, suivez les instructions dans le README.md' + error))
         // Modification de contenu de chaque variable avec les bonnes données :
 function showProduct(data) {
     document.title = data.name
@@ -45,56 +45,61 @@ function showProduct(data) {
         }
 
 //     Récupération des donnes par rapport au choix de l'utilisateur
-const selectQuantity = document.getElementById('quantity')
-const selectColors = document.getElementById('colors')
-// Configuration un eventListener quand l'utilisateur clique sur ajouter au panier
-const addToCart = document.getElementById('addToCart')
-addToCart.addEventListener('click', (event) => {
-    event.preventDefault();
-    const selection = {
-        id: newID,
-        image: imageUrl,
-        alt: imageAlt,
-        name: title.textContent,
-        price: price.textContent,
-        color: selectColors.value,
-        quantity: selectQuantity.value,
-    }
-    // Déclaration variable productInLocalStorage
-    let productInLocalStorage =  JSON.parse(localStorage.getItem('product'))
-    // Ajoute les produits sélectionnés dans le localStorage
-    const addProductLocalStorage = () => {
-        // Récupèration de la sélection de l'utilisateur dans le tableau de l'objet :
-    productInLocalStorage.push(selection)
-        // Stockage des données récupérées dans le localStorage :
-    localStorage.setItem('product', JSON.stringify(productInLocalStorage))
-    }
-    // Création d'une boîte de dialogue pour confirmer l'ajout au panier
-    let addConfirm = () => {
-        alert('Le produit a bien été ajouté au panier')
-    }
-    let update = false
-    // S'il y a des produits enregistrés dans le localStorage
-    if (productInLocalStorage) {
-        // Verification que le produit ne soit pas deja dans le localstorage/panier
-        productInLocalStorage.forEach (function (productOk, key) {
-            if (productOk.id == newID && productOk.color == selectColors.value) {
-                productInLocalStorage[key].quantity = parseInt(productOk.quantity) + parseInt(selectQuantity.value)
-                localStorage.setItem('product', JSON.stringify(productInLocalStorage))
-                update = true
-                addConfirm()
+// récupération de #colors, #quantity et #addToCard
+let chosenColor = document.querySelector('#colors');
+let chosenQuantity = document.querySelector('#quantity');
+let sendToBasket = document.querySelector('#addToCart');
+
+// écoute du click sur l'ajout au panier
+sendToBasket.addEventListener('click', function (event) {
+    // récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
+    let valueColor = chosenColor.value;
+    let valueQuantity = chosenQuantity.value;
+    if (valueQuantity <= 0 || valueQuantity > 100 || valueColor == ""){
+        alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
+    } else {
+        // récupération du contenu du panier (sans produit choisi de la page actuel)
+        let basketStr = localStorage.getItem('basket');
+        if (basketStr == null) {
+            let basket = {
+                totalQuantity: 0,
+                products: []
             }
-        });
-        if (!update) {
-            addProductLocalStorage()
-            addConfirm()
+        } else {
+            let basket = JSON.parse(basketStr)
         }
-    }
-        // S'il n'y a aucun produit enregistré dans le localStorage
-    else {
-        // Création un tableau avec les éléments choisi par l'utilisateur
-        productInLocalStorage = []
-        addProductLocalStorage()
-        addConfirm()
+
+        // creation du produit choisi
+        let chosenProduct = {
+            id: productUnit._id,
+            name: productUnit.name,
+            color: valueColor,
+            quantity: Number(valueQuantity),
+            img: productUnit.imageUrl,
+        }
+
+        // ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
+        boolean = false;
+        for (let i = 0 ; i < basket.products.length; i++) {
+            basketProduct = basket.products[i];
+            if (basketProduct.id == chosenProduct.id && basketProduct.color == chosenProduct.color) {
+                newQuantity = basketProduct.quantity + chosenProduct.quantity;
+                basketProduct.quantity = newQuantity;
+                basket.totalQuantity = chosenProduct.quantity + basket.totalQuantity;
+                boolean = true;
+                break;
+            }
+        }
+
+        // ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
+        if (boolean == false) {
+            basket.products.push(chosenProduct);
+            newQuantity = basket.totalQuantity + chosenProduct.quantity;
+            basket.totalQuantity = newQuantity;
+        }
+        alert('Votre commande de ' + chosenProduct.quantity + ' ' + productUnit.name + ' ' + chosenProduct.color + ' est bien ajoutée au panier !');
+        let lineBasket = JSON.stringify(basket);
+        localStorage.setItem("basket", lineBasket);
+        window.location.reload();
     }
 });
