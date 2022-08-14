@@ -90,7 +90,7 @@ addToCart.addEventListener('click', (event) => {
             addConfirm()
         }
     }
-    // S'il n'y a aucun produit enregistré dans le localStorage
+        // S'il n'y a aucun produit enregistré dans le localStorage
     else {
         // Création un tableau avec les éléments choisi par l'utilisateur
         productInLocalStorage = []
