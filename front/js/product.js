@@ -21,31 +21,31 @@ function showProduct(productData) {
     document.title = productData.name;
     let panelIMG = document.querySelector('.item__img');
 
-// insertion image du canapé
+// Insertion image du canapé
     let createPict = document.createElement('img');
     createPict.setAttribute('src', productData.imageUrl);
     createPict.setAttribute('alt', productData.altTxt);
     panelIMG.appendChild(createPict);
 
-// insertion du nom du canapé
+// Insertion du nom du canapé
     let panelH1 = document.querySelector('#title');
     panelH1.textContent = productData.name;
 
-// insertion du prix du canapé
-    let panelPrice = document.querySelector('#price');
-    panelPrice.textContent = productData.price;
+// Insertion du prix du canapé
+    let panelPrix = document.querySelector('#price');
+    panelPrix.textContent = productData.price;
 
-// insertion du choix du canapé
+// Insertion du choix du canapé
     let panelDescription = document.querySelector('#description');
     panelDescription.textContent = productData.description;
 
-// récupération de #colors
+// Récupération de #colors
     let panelOption = document.querySelector('#colors');
 
-// insertion du tableau des couleurs dans une variable
+// Insertion du tableau des couleurs dans une variable
     let colors = productData.colors;
 
-// parcours du tableau de couleurs et insertion de celles-ci dans choix
+// Parcours du tableau de couleurs et insertion de celles-ci dans choix
     for (let i = 0; i < colors.length; i++){
         let colorProduct = colors[i];
         let createOption = document.createElement('option');
@@ -82,7 +82,7 @@ sendToBasket.addEventListener('click', function (event) {
         }
 
 // Creation du produit choisi
-     let chosenProduct = {
+     let choixProduct = {
             id: productUnit._id,
             name: productUnit.name,
             color: valueColor,
@@ -94,10 +94,10 @@ sendToBasket.addEventListener('click', function (event) {
         boolean = false;
         for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i];
-            if (basketProduct.id == chosenProduct.id && basketProduct.color == chosenProduct.color) {
-                newQuantity = basketProduct.quantity + chosenProduct.quantity;
+            if (basketProduct.id == choixProduct.id && basketProduct.color == choixProduct.color) {
+                newQuantity = basketProduct.quantity + choixProduct.quantity;
                 basketProduct.quantity = newQuantity;
-                basket.totalQuantity = chosenProduct.quantity + basket.totalQuantity;
+                basket.totalQuantity = choixProduct.quantity + basket.totalQuantity;
                 boolean = true;
                 break;
             }
@@ -105,11 +105,11 @@ sendToBasket.addEventListener('click', function (event) {
 
 // Ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
         if (boolean == false) {
-            basket.products.push(chosenProduct);
-            newQuantity = basket.totalQuantity + chosenProduct.quantity;
+            basket.products.push(choixProduct);
+            newQuantity = basket.totalQuantity + choixProduct.quantity;
             basket.totalQuantity = newQuantity;
         }
-        alert(`Votre commande de ${chosenProduct.quantity}  ${productUnit.name}  ${chosenProduct.color} est bien ajoutée au panier !`);
+        alert(`Votre commande de ${choixProduct.quantity}  ${productUnit.name}  ${choixProduct.color} est bien ajoutée au panier !`);
         let lineBasket = JSON.stringify(basket);
         localStorage.setItem("basket", lineBasket);
         window.location.reload();
