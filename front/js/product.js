@@ -1,11 +1,11 @@
 // Récupération de l'id dans l'URL
-let string = window.location.href;
-let url = new URL(string);
-let idURL = url.searchParams.get("id");
+    let string = window.location.href;
+    let url = new URL(string);
+    let idURL = url.searchParams.get("id");
 
 // Appel API avec l'id du produit
-let productUnit = "";
-let requestURL = "http://localhost:3000/api/products/" + idURL
+    let productUnit = "";
+    let requestURL = "http://localhost:3000/api/products/" + idURL
 fetch(requestURL)
     .then(response => response.json())
     .then(async function (resultatAPI) {
@@ -55,23 +55,23 @@ function showProduct(productSheet) {
 
 // Ajouter au localstorage
 
-// récupération de #colors, #quantity et #addToCard
-let chosenColor = document.querySelector('#colors');
-let chosenQuantity = document.querySelector('#quantity');
-let sendToBasket = document.querySelector('#addToCart');
+// Récupération de #colors, #quantity et #addToCard
+    let choixColor = document.querySelector('#colors');
+    let choixQuantity = document.querySelector('#quantity');
+    let sendToBasket = document.querySelector('#addToCart');
 
-// écoute du click sur l'ajout au panier
+// Ecoute du click sur l'ajout au panier
 sendToBasket.addEventListener('click', function (event) {
-    // récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
-    let valueColor = chosenColor.value;
-    let valueQuantity = chosenQuantity.value;
-    if (valueQuantity <= 0 || valueQuantity > 100 || valueColor == ""){
+// Récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
+    let valueColor = choixColor.value;
+    let valueQuantity = choixQuantity.value;
+        if (valueQuantity <= 0 || valueQuantity > 100 || valueColor == ""){
         alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
     } else {
-        // récupération du contenu du panier (sans produit choisi de la page actuel)
-        var basketStr = localStorage.getItem('basket');
+// Récupération du contenu du panier (sans produit choisi de la page actuel)
+     let basketStr = localStorage.getItem('basket');
         if (basketStr == null) {
-            var basket = {
+            let basket = {
                 totalQuantity: 0,
                 products: []
             }
@@ -79,8 +79,8 @@ sendToBasket.addEventListener('click', function (event) {
             var basket = JSON.parse(basketStr)
         }
 
-        // creation du produit choisi
-        let chosenProduct = {
+// Creation du produit choisi
+     let chosenProduct = {
             id: productUnit._id,
             name: productUnit.name,
             color: valueColor,
@@ -88,7 +88,7 @@ sendToBasket.addEventListener('click', function (event) {
             img: productUnit.imageUrl,
         }
 
-        // Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
+// Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
         boolean = false;
         for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i];
@@ -101,7 +101,7 @@ sendToBasket.addEventListener('click', function (event) {
             }
         }
 
-        // ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
+// Ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
         if (boolean == false) {
             basket.products.push(chosenProduct);
             newQuantity = basket.totalQuantity + chosenProduct.quantity;
