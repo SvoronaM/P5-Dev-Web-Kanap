@@ -69,7 +69,7 @@ sendToBasket.addEventListener('click', function (event) {
         alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
     } else {
 // Récupération du contenu du panier (sans produit choisi de la page actuel)
-     let basketStr = localStorage.getItem('basket');
+     let basketStr = localStorage.getItem('basket')
         if (basketStr == null) {
             let basket = {
                 totalQuantity: 0,
@@ -107,7 +107,7 @@ sendToBasket.addEventListener('click', function (event) {
             newQuantity = basket.totalQuantity + chosenProduct.quantity;
             basket.totalQuantity = newQuantity;
         }
-        alert('Votre commande de ' + chosenProduct.quantity + ' ' + productUnit.name + ' ' + chosenProduct.color + ' est bien ajoutée au panier !');
+        alert(`Votre commande de ${chosenProduct.quantity}  ${productUnit.name}  ${chosenProduct.color} est bien ajoutée au panier !`);
         let lineBasket = JSON.stringify(basket);
         localStorage.setItem("basket", lineBasket);
         window.location.reload();
