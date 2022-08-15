@@ -12,38 +12,40 @@ fetch(requestURL)
         productUnit = await resultatAPI;
         showProduct(productUnit);
     })
-    .catch(error => alert("Erreur : " + error));
-
+// Ajout un message au cas où le serveur ne répond pas
+    .catch(_error => {
+        alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.');
+    });
 // Affichage du produit par page produit
-function showProduct(productSheet) {
-    document.title = productSheet.name;
+function showProduct(productData) {
+    document.title = productData.name;
     let panelIMG = document.querySelector('.item__img');
 
-    // insertion image du canapé
+// insertion image du canapé
     let createPict = document.createElement('img');
-    createPict.setAttribute('src', productSheet.imageUrl);
-    createPict.setAttribute('alt', productSheet.altTxt);
+    createPict.setAttribute('src', productData.imageUrl);
+    createPict.setAttribute('alt', productData.altTxt);
     panelIMG.appendChild(createPict);
 
-    // insertion du nom du canapé
+// insertion du nom du canapé
     let panelH1 = document.querySelector('#title');
-    panelH1.textContent = productSheet.name;
+    panelH1.textContent = productData.name;
 
-    // insertion du prix du canapé
+// insertion du prix du canapé
     let panelPrice = document.querySelector('#price');
-    panelPrice.textContent = productSheet.price;
+    panelPrice.textContent = productData.price;
 
-    // insertion du choix du canapé
+// insertion du choix du canapé
     let panelDescription = document.querySelector('#description');
-    panelDescription.textContent = productSheet.description;
+    panelDescription.textContent = productData.description;
 
-    // récupération de #colors
+// récupération de #colors
     let panelOption = document.querySelector('#colors');
 
-    // insertion du tableau des couleurs dans une variable
-    let colors = productSheet.colors;
+// insertion du tableau des couleurs dans une variable
+    let colors = productData.colors;
 
-    // parcours du tableau de couleurs et insertion de celles-ci dans choix
+// parcours du tableau de couleurs et insertion de celles-ci dans choix
     for (let i = 0; i < colors.length; i++){
         let colorProduct = colors[i];
         let createOption = document.createElement('option');
