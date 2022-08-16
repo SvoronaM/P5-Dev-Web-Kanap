@@ -67,22 +67,23 @@ sendToBasket.addEventListener('click', function (event) {
 // Récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
     let valueColor = choixColor.value
     let valueQuantity = choixQuantity.value
-        if (valueQuantity <= 0 || valueQuantity > 100 || valueColor == ""){
+    if (valueQuantity <= 0 || valueQuantity > 100 || valueColor == ""){
         alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
     } else {
-// Récupération du contenu du panier (sans produit choisi de la page actuel)
-     let basketStr = localStorage.getItem('basket')
+        // Récupération du contenu du panier (sans produit choisi de la page actuel)
+        let basket =  {}
+        let basketStr = localStorage.getItem('basket')
         if (basketStr == null) {
-            let basket = {
+            basket = {
                 totalQuantity: 0,
                 products: []
             }
         } else {
-            var basket = JSON.parse(basketStr)
+            basket = JSON.parse(basketStr)
         }
 
-// Creation du produit choisi
-     let choixProduct = {
+        // Creation du produit choisi
+        let choixProduct = {
             id: productUnit._id,
             name: productUnit.name,
             color: valueColor,
@@ -90,9 +91,9 @@ sendToBasket.addEventListener('click', function (event) {
             img: productUnit.imageUrl,
         }
 
-// Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
+        // Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
         boolean = false;
-        for (let i = 0 ; i < basket.products.length; i++) {
+        for (var i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i]
             if (basketProduct.id == choixProduct.id && basketProduct.color == choixProduct.color) {
                 newQuantity = basketProduct.quantity + choixProduct.quantity
