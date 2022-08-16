@@ -62,7 +62,7 @@ function showProduct(productData) {
     let choixQuantity = document.querySelector('#quantity')
     let sendToBasket = document.querySelector('#addToCart')
 
-// Ecoute du click sur l'ajout au panier
+// Configuration un eventListener quand l'utilisateur clique sur ajouter au panier
 sendToBasket.addEventListener('click', function (event) {
 // Récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
     let valueColor = choixColor.value
