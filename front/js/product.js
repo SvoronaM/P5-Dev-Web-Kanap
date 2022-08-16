@@ -93,7 +93,7 @@ sendToBasket.addEventListener('click', function (event) {
 
         // Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
         boolean = false;
-        for (var i = 0 ; i < basket.products.length; i++) {
+        for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i]
             if (basketProduct.id == choixProduct.id && basketProduct.color == choixProduct.color) {
                 newQuantity = basketProduct.quantity + choixProduct.quantity
