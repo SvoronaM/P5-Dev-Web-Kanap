@@ -104,7 +104,7 @@ sendToBasket.addEventListener('click', function (event) {
             }
         }
 
-// Ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
+        // Ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
         if (boolean == false) {
             basket.products.push(choixProduct);
             newQuantity = basket.totalQuantity + choixProduct.quantity
