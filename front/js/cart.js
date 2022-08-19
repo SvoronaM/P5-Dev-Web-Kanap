@@ -1,10 +1,8 @@
 // RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE   //
 let basketStr = localStorage.getItem('basket');
 let basket = JSON.parse(basketStr);
-
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
-
 // Affichage des produits dans la page panier (avec les prix en fetch)
 function showProductBasket(produit) {
     // AFFICHAGE DU/DES PRODUIT(S) PANIER
@@ -35,4 +33,9 @@ function showProductBasket(produit) {
     let creatH2 = document.creatElement('h2');
     creatH2.textContent = produit.name;
     creatDivDes.appendChild(creatH2);
+    // insertion P color
+    let creatpColor = document.creatElement('p');
+    creatpColor.textContent = "Couleur : " + produit.color;
+    creatDivDes.appendChild(creatpColor);
+
 
