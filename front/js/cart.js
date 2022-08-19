@@ -23,3 +23,7 @@ function showProductBasket(produit) {
     creatPict.setAttribute('src', produit.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
+    // insertion div content description
+    let creatDivContDes = document.creatElement('div');
+    creatDivContDes.className = 'cart__item__content';
+    creatArticle.appendChild(creatDivContDes);
