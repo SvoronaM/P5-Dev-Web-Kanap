@@ -18,3 +18,8 @@ function showProductBasket(produit) {
     let creatDivIMG = document.creatElement('div');
     creatDivIMG.className = 'cart__item__img';
     creatArticle.appendChild(creatDivIMG);
+    // insertion des images
+    let creatPict = document.creatElement('img');
+    creatPict.setAttribute('src', produit.img);
+    creatPict.setAttribute('alt', "Photographie d'un canapé");
+    creatDivIMG.appendChild(creatPict);
