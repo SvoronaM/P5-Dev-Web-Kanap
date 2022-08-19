@@ -15,6 +15,6 @@ function showProductBasket(produit) {
     creatArticle.setAttribute('data-color', produit.color);
     cartPanel.appendChild(creatArticle);
     // insertion div de l'img
-    let createDivIMG = document.createElement('div');
-    createDivIMG.className = 'cart__item__img';
-    createArticle.appendChild(createDivIMG);
+    let creatDivIMG = document.creatElement('div');
+    creatDivIMG.className = 'cart__item__img';
+    creatArticle.appendChild(creatDivIMG);
