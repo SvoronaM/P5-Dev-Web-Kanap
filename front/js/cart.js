@@ -37,5 +37,16 @@ function showProductBasket(produit) {
     let creatpColor = document.creatElement('p');
     creatpColor.textContent = "Couleur : " + produit.color;
     creatDivDes.appendChild(creatpColor);
-
+    // recupération du prix en utilisant l'id du produit
+    let productUnit = "";
+    fetch("http://localhost:3000/api/products/" + produit.id)
+        .then(response => response.json())
+        .then(async function (resultatAPI) {
+            productUnit = await resultatAPI;
+            // insertion P price
+            let creatpPrice = document.creatElement('p');
+            creatpPrice.textContent = "Prix : " + productUnit.price + " € / canapé";
+            creatDivDes.appendChild(creatpPrice);
+        })
+        .catch(error => alert("Erreur : " + error));
 
