@@ -27,3 +27,7 @@ function showProductBasket(produit) {
     let creatDivContDes = document.creatElement('div');
     creatDivContDes.className = 'cart__item__content';
     creatArticle.appendChild(creatDivContDes);
+    // insertion div description
+    let creatDivDes = document.creatElement('div');
+    creatDivDes.className = 'cart__item__content__description';
+    creatDivContDes.appendChild(creatDivDes);
