@@ -23,7 +23,7 @@ function showProductBasket(produit) {
     creatPict.setAttribute('src', produit.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
-    // insertion div content description
+    // insertion div content
     let creatDivContDes = document.creatElement('div');
     creatDivContDes.className = 'cart__item__content';
     creatArticle.appendChild(creatDivContDes);
@@ -31,3 +31,8 @@ function showProductBasket(produit) {
     let creatDivDes = document.creatElement('div');
     creatDivDes.className = 'cart__item__content__description';
     creatDivContDes.appendChild(creatDivDes);
+    // insertion H2
+    let creatH2 = document.creatElement('h2');
+    creatH2.textContent = produit.name;
+    creatDivDes.appendChild(creatH2);
+
