@@ -5,7 +5,6 @@ let basket = JSON.parse(basketStr);
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
 function showProductBasket(produit) {
-    // AFFICHAGE DU/DES PRODUIT(S) PANIER
     // insertion des articles
     let creatArticle = document.creatElement('article');
     creatArticle.className = 'cart__item';
