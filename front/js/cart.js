@@ -1,4 +1,4 @@
-// RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE   //
+// RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE
 let basketStr = localStorage.getItem('basket');
 let basket = JSON.parse(basketStr);
 // Récupération de l'élement "cart__items"
