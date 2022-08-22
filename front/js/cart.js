@@ -15,28 +15,28 @@ function showProductBasket(produit) {
     let creatDivIMG = document.creatElement('div');
     creatDivIMG.className = 'cart__item__img';
     creatArticle.appendChild(creatDivIMG);
-    // insertion des images
+    // Insertion des images
     let creatPict = document.creatElement('img');
     creatPict.setAttribute('src', produit.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
-    // insertion div content
+    // Insertion div content
     let creatDivContDes = document.creatElement('div');
     creatDivContDes.className = 'cart__item__content';
     creatArticle.appendChild(creatDivContDes);
-    // insertion div description
+    // Insertion div description
     let creatDivDes = document.creatElement('div');
     creatDivDes.className = 'cart__item__content__description';
     creatDivContDes.appendChild(creatDivDes);
-    // insertion H2
+    // Insertion H2
     let creatH2 = document.creatElement('h2');
     creatH2.textContent = produit.name;
     creatDivDes.appendChild(creatH2);
-    // insertion P color
+    // Insertion P color
     let creatpColor = document.creatElement('p');
     creatpColor.textContent = "Couleur : " + produit.color;
     creatDivDes.appendChild(creatpColor);
-    // recupération du prix en utilisant l'id du produit
+    // Recupération du prix en utilisant l'id du produit
     let productUnit = "";
     fetch("http://localhost:3000/api/products/" + produit.id)
         .then(response => response.json())
@@ -48,19 +48,19 @@ function showProductBasket(produit) {
             creatDivDes.appendChild(creatpPrice);
         })
         .catch(error => alert("Erreur : " + error));
-    // insertion div content settings
+    // Insertion div content settings
     let creatDivContSet = document.creatElement('div');
     creatDivContSet.className = 'cart__item__content__settings';
     creatDivContDes.appendChild(creatDivContSet);
-    // insertion div settings quantity
+    // Insertion div settings quantity
     let creatDivContSetQuantity = document.creatElement('div');
     creatDivContSetQuantity.className = 'cart__item__content__settings__quantity';
     creatDivContSet.appendChild(creatDivContSetQuantity);
-    // insertion P quantity
+    // Insertion P quantity
     let creatpQuantity = document.creatElement('p');
     creatpQuantity.textContent = "Qté :";
     creatDivContSetQuantity.appendChild(creatpQuantity);
-    // insertion input quantity
+    // Insertion input quantity
     let creatInputQuantity = document.creatElement('input');
     creatInputQuantity.className = 'itemQuantity';
     creatInputQuantity.setAttribute('type', 'number');
@@ -69,11 +69,11 @@ function showProductBasket(produit) {
     creatInputQuantity.setAttribute('max', '100');
     creatInputQuantity.setAttribute('value', produit.quantity);
     creatDivContSetQuantity.appendChild(creatInputQuantity);
-    // insertion div settings delete
+    // Insertion div settings delete
     let creatDivContSetDel = document.creatElement('div');
     creatDivContSetDel.className = 'cart__item__content__settings__delete';
     creatDivContSet.appendChild(creatDivContSetDel);
-    // insertion P delete item
+    // Insertion P delete item
     let creatpDelete = document.creatElement('p');
     creatpDelete.className = 'deleteItem';
     creatpDelete.textContent = "Supprimer";
