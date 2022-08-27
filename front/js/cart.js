@@ -79,4 +79,4 @@ function showProductBasket(produit) {
     creatpDelete.textContent = "Supprimer";
     creatDivContSetDel.appendChild(creatpDelete);
 }
-           showProductBasket(produit.color)
+           showProductBasket(produit)
