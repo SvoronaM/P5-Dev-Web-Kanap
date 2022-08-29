@@ -4,12 +4,12 @@ let basket = JSON.parse(basketStr);
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
-function showProductBasket() {
+function showProductBasket(produit) {
     // Insertion des articles
     let creatArticle = document.createElement('article');
     creatArticle.className = 'cart__item';
-    creatArticle.setAttribute('data-id', product.id);
-    creatArticle.setAttribute('data-color', product.color);
+    creatArticle.setAttribute('data-id', produit.id);
+    creatArticle.setAttribute('data-color', produit.color);
     cartPanel.appendChild(creatArticle);
     // Insertion div de l'img
     let creatDivIMG = document.createElement('div');
@@ -17,7 +17,7 @@ function showProductBasket() {
     creatArticle.appendChild(creatDivIMG);
     // Insertion des images
     let creatPict = document.createElement('img');
-    creatPict.setAttribute('src', product.img);
+    creatPict.setAttribute('src', produit.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
     // Insertion div content
@@ -30,15 +30,15 @@ function showProductBasket() {
     creatDivContDes.appendChild(creatDivDes);
     // Insertion H2
     let creatH2 = document.createElement('h2');
-    creatH2.textContent = product.name;
+    creatH2.textContent = produit.name;
     creatDivDes.appendChild(creatH2);
     // Insertion P color
     let creatpColor = document.createElement('p');
-    creatpColor.textContent = "Couleur : " + product.color;
+    creatpColor.textContent = "Couleur : " + produit.color;
     creatDivDes.appendChild(creatpColor);
     // Recupération du prix en utilisant l'id du produit
     let productUnit = "";
-    fetch("http://localhost:3000/api/products/" + product.id)
+    fetch("http://localhost:3000/api/products/" + produit.id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
             productUnit = await resultatAPI;
@@ -67,7 +67,7 @@ function showProductBasket() {
     creatInputQuantity.setAttribute('name', 'itemQuantity');
     creatInputQuantity.setAttribute('min', '0');
     creatInputQuantity.setAttribute('max', '100');
-    creatInputQuantity.setAttribute('value', product.quantity);
+    creatInputQuantity.setAttribute('value', produit.quantity);
     creatDivContSetQuantity.appendChild(creatInputQuantity);
     // Insertion div settings delete
     let creatDivContSetDel = document.createElement('div');
@@ -79,4 +79,4 @@ function showProductBasket() {
     creatpDelete.textContent = "Supprimer";
     creatDivContSetDel.appendChild(creatpDelete);
 }
-showProductBasket()
+showProductBasket(produit)
