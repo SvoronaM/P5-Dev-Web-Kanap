@@ -11,24 +11,24 @@ function showProductBasketArticleContent(basket) {
     let creatArticle = document.createElement('article');
     creatArticle.className = 'cart__item';
     creatArticle.setAttribute('data-id', basket.products[0].id);
-    creatArticle.setAttribute('data-color', basket.color);
+    creatArticle.setAttribute('data-color', basket.products[0].color);
     cartPanel.appendChild(creatArticle);
-    // Insertion div content
-    let creatDivContDes = document.createElement('div');
-    creatDivContDes.className = 'cart__item__content';
-    creatArticle.appendChild(creatDivContDes);
-    }
-function showProductBasketImg() {
     // Insertion div de l'img
     let creatDivIMG = document.createElement('div');
     creatDivIMG.className = 'cart__item__img';
     creatArticle.appendChild(creatDivIMG);
+}
+function showProductBasketImg(basket) {
     // Insertion des images
     let creatPict = document.createElement('img');
-    creatPict.setAttribute('src', produit.img);
+    creatPict.setAttribute('src', basket.products.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
-    console.log('cool')
+    console.log(basket.products.img)
+    // Insertion div content
+    let creatDivContDes = document.createElement('div');
+    creatDivContDes.className = 'cart__item__content';
+    creatArticle.appendChild(creatDivContDes);
 }
 function showProductBasketDivH() {
     // Insertion div description
@@ -96,6 +96,6 @@ function showProductBasketDel() {
 }
 function showProductBasket() {
     showProductBasketArticleContent(basket)
-console.log('coucou')
+
 }
     showProductBasket()
