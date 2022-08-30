@@ -6,18 +6,18 @@ let produit = []
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
-function showProductBasketArticleContent() {
+function showProductBasketArticleContent(basket) {
     // Insertion des articles
     let creatArticle = document.createElement('article');
     creatArticle.className = 'cart__item';
-    creatArticle.setAttribute('data-id', produit.id);
-    creatArticle.setAttribute('data-color', produit.color);
+    creatArticle.setAttribute('data-id', basket.products[0].id);
+    creatArticle.setAttribute('data-color', basket.color);
     cartPanel.appendChild(creatArticle);
     // Insertion div content
     let creatDivContDes = document.createElement('div');
     creatDivContDes.className = 'cart__item__content';
     creatArticle.appendChild(creatDivContDes);
-}
+    }
 function showProductBasketImg() {
     // Insertion div de l'img
     let creatDivIMG = document.createElement('div');
@@ -28,6 +28,7 @@ function showProductBasketImg() {
     creatPict.setAttribute('src', produit.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
+    console.log('cool')
 }
 function showProductBasketDivH() {
     // Insertion div description
@@ -67,7 +68,7 @@ function showProductBasketSet () {
     creatDivContSetQuantity.className = 'cart__item__content__settings__quantity';
     creatDivContSet.appendChild(creatDivContSetQuantity);
 }
-function showProductBasketQuant () {
+function showProductBasketQuant() {
     // Insertion P quantity
     let creatpQuantity = document.createElement('p');
     creatpQuantity.textContent = "Qté :";
@@ -82,7 +83,7 @@ function showProductBasketQuant () {
     creatInputQuantity.setAttribute('value', produit.quantity);
     creatDivContSetQuantity.appendChild(creatInputQuantity);
 }
-function showProductBasketDel () {
+function showProductBasketDel() {
     // Insertion div settings delete
     let creatDivContSetDel = document.createElement('div');
     creatDivContSetDel.className = 'cart__item__content__settings__delete';
@@ -93,3 +94,8 @@ function showProductBasketDel () {
     creatpDelete.textContent = "Supprimer";
     creatDivContSetDel.appendChild(creatpDelete);
 }
+function showProductBasket() {
+    showProductBasketArticleContent(basket)
+console.log('coucou')
+}
+    showProductBasket()
