@@ -17,20 +17,18 @@ function showProductBasketArticleContent(basket) {
     let creatDivIMG = document.createElement('div');
     creatDivIMG.className = 'cart__item__img';
     creatArticle.appendChild(creatDivIMG);
-}
-function showProductBasketImg(basket) {
     // Insertion des images
     let creatPict = document.createElement('img');
     creatPict.setAttribute('src', basket.products.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
     console.log(basket.products.img)
+}
+function showProductBasketDivH() {
     // Insertion div content
     let creatDivContDes = document.createElement('div');
     creatDivContDes.className = 'cart__item__content';
     creatArticle.appendChild(creatDivContDes);
-}
-function showProductBasketDivH() {
     // Insertion div description
     let creatDivDes = document.createElement('div');
     creatDivDes.className = 'cart__item__content__description';
