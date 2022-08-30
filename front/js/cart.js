@@ -19,12 +19,12 @@ function showProductBasketArticleContent(basket) {
     creatArticle.appendChild(creatDivIMG);
     // Insertion des images
     let creatPict = document.createElement('img');
-    creatPict.setAttribute('src', basket.products.img);
+    creatPict.setAttribute('src', basket.img);
     creatPict.setAttribute('alt', "Photographie d'un canapé");
     creatDivIMG.appendChild(creatPict);
-    console.log(basket.products.img)
+    console.log(basket.img)
 }
-function showProductBasketDivH() {
+function showProductBasketDivH(basket) {
     // Insertion div content
     let creatDivContDes = document.createElement('div');
     creatDivContDes.className = 'cart__item__content';
@@ -35,17 +35,17 @@ function showProductBasketDivH() {
     creatDivContDes.appendChild(creatDivDes);
     // Insertion H2
     let creatH2 = document.createElement('h2');
-    creatH2.textContent = produit.name;
+    creatH2.textContent = basket.name;
     creatDivDes.appendChild(creatH2);
 }
-function showProductBasketPetPrix () {
+function showProductBasketPetPrix (basket) {
     // Insertion P color
     let creatpColor = document.createElement('p');
-    creatpColor.textContent = "Couleur : " + produit.color;
+    creatpColor.textContent = "Couleur : " + basket.color;
     creatDivDes.appendChild(creatpColor);
     // Recupération du prix en utilisant l'id du produit
     let productUnit = "";
-    fetch("http://localhost:3000/api/products/" + produit.id)
+    fetch("http://localhost:3000/api/products/" + basket.id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
             productUnit = await resultatAPI;
@@ -56,7 +56,7 @@ function showProductBasketPetPrix () {
         })
         .catch(error => alert("Erreur : " + error));
 }
-function showProductBasketSet () {
+function showProductBasketSet (basket) {
     // Insertion div content settings
     let creatDivContSet = document.createElement('div');
     creatDivContSet.className = 'cart__item__content__settings';
@@ -66,7 +66,7 @@ function showProductBasketSet () {
     creatDivContSetQuantity.className = 'cart__item__content__settings__quantity';
     creatDivContSet.appendChild(creatDivContSetQuantity);
 }
-function showProductBasketQuant() {
+function showProductBasketQuant(basket) {
     // Insertion P quantity
     let creatpQuantity = document.createElement('p');
     creatpQuantity.textContent = "Qté :";
@@ -81,7 +81,7 @@ function showProductBasketQuant() {
     creatInputQuantity.setAttribute('value', produit.quantity);
     creatDivContSetQuantity.appendChild(creatInputQuantity);
 }
-function showProductBasketDel() {
+function showProductBasketDel(basket) {
     // Insertion div settings delete
     let creatDivContSetDel = document.createElement('div');
     creatDivContSetDel.className = 'cart__item__content__settings__delete';
@@ -92,8 +92,8 @@ function showProductBasketDel() {
     creatpDelete.textContent = "Supprimer";
     creatDivContSetDel.appendChild(creatpDelete);
 }
-function showProductBasket() {
+function showProductBasket(basket) {
     showProductBasketArticleContent(basket)
 
 }
-    showProductBasket()
+    showProductBasket(basket)
