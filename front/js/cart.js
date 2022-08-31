@@ -1,30 +1,32 @@
 // RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE
 let basketStr = localStorage.getItem('basket');
 let basket = JSON.parse(basketStr);
-let produit = []
+let products = []
 
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
-function showProductBasketArticleContent(basket) {
+function showProductBasketArticleImg(basket) {
     // Insertion des articles
     let creatArticle = document.createElement('article');
     creatArticle.className = 'cart__item';
     creatArticle.setAttribute('data-id', basket.products[0].id);
     creatArticle.setAttribute('data-color', basket.products[0].color);
     cartPanel.appendChild(creatArticle);
+
     // Insertion div de l'img
-    let creatDivIMG = document.createElement('div');
+   let creatDivIMG = document.createElement('div');
     creatDivIMG.className = 'cart__item__img';
     creatArticle.appendChild(creatDivIMG);
-    // Insertion des images
-    let creatPict = document.createElement('img');
-    creatPict.setAttribute('src', basket.img);
-    creatPict.setAttribute('alt', "Photographie d'un canapé");
-    creatDivIMG.appendChild(creatPict);
-    console.log(basket.img)
-}
-function showProductBasketDivH(basket) {
+     // Insertion des images
+     let creatPict = document.createElement('img');
+     creatPict.setAttribute('src', basket.products[1].img);
+     creatPict.setAttribute('alt', "Photographie d'un canapé");
+     creatDivIMG.appendChild(creatPict);
+     console.log(basket.products[1].img)
+ }
+/* showProductBasketArticleImg(basket)*/
+/*function showProductBasketDivH(basket) {
     // Insertion div content
     let creatDivContDes = document.createElement('div');
     creatDivContDes.className = 'cart__item__content';
@@ -38,7 +40,7 @@ function showProductBasketDivH(basket) {
     creatH2.textContent = basket.name;
     creatDivDes.appendChild(creatH2);
 }
-function showProductBasketPetPrix (basket) {
+function showProductBasketPetPrix(basket) {
     // Insertion P color
     let creatpColor = document.createElement('p');
     creatpColor.textContent = "Couleur : " + basket.color;
@@ -56,7 +58,7 @@ function showProductBasketPetPrix (basket) {
         })
         .catch(error => alert("Erreur : " + error));
 }
-function showProductBasketSet (basket) {
+function showProductBasketSet(basket) {
     // Insertion div content settings
     let creatDivContSet = document.createElement('div');
     creatDivContSet.className = 'cart__item__content__settings';
@@ -91,9 +93,9 @@ function showProductBasketDel(basket) {
     creatpDelete.className = 'deleteItem';
     creatpDelete.textContent = "Supprimer";
     creatDivContSetDel.appendChild(creatpDelete);
-}
-function showProductBasket(basket) {
-    showProductBasketArticleContent(basket)
+}*/
+function showProductBasket() {
+    showProductBasketArticleImg(basket)
 
 }
-    showProductBasket(basket)
+    showProductBasket()
