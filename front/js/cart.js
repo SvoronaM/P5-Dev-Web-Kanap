@@ -6,6 +6,11 @@ let products = []
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
+async function getProduct(id) {
+    return fetch("http://localhost:3000/api/products/" + id)
+        .then(response => response.json())
+        .catch(error => alert("Erreur : " + error));
+}
 function showProductBasketArticleImg(basket) {
     // Insertion des articles
     let creatArticle = document.createElement('article');
