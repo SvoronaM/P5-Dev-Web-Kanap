@@ -14,7 +14,6 @@ function showProductBasketArticleImg(basket) {
     creatArticle.setAttribute('data-id', basket.products[0].id);
     creatArticle.setAttribute('data-color', basket.products[0].color);
     cartPanel.appendChild(creatArticle);
-
     // Insertion div de l'img
    let creatDivIMG = document.createElement('div');
     creatDivIMG.className = 'cart__item__img';
@@ -26,8 +25,7 @@ function showProductBasketArticleImg(basket) {
      creatDivIMG.appendChild(creatPict);
      console.log(basket.products[1].img)
  }
-/* showProductBasketArticle(basket)*/
-/*function showProductBasketDivH(basket) {
+function showProductBasketDivH(basket) {
     // Insertion div content
     let creatDivContDes = document.createElement('div');
     creatDivContDes.className = 'cart__item__content';
@@ -97,6 +95,6 @@ function showProductBasketDel(basket) {
 }*/
 function showProductBasket() {
     showProductBasketArticleImg(basket)
-
+    showProductBasketDivH(basket)
 }
     showProductBasket()
