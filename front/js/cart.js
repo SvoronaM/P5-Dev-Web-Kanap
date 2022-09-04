@@ -1,100 +1,98 @@
-// RECUPERER LES PRODUITS STOCKES DANS LE LOCALSTORAGE
+// Récupération du contenu du panier à partir du localstorage
 let basketStr = localStorage.getItem('basket');
 let basket = JSON.parse(basketStr);
 let products = []
 
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
-// Affichage des produits dans la page panier (avec les prix en fetch)
 
-function showProductBasketArticleImg(basket) {
-    // Insertion des articles
-    let creatArticle = document.createElement('article');
-    creatArticle.className = 'cart__item';
-    creatArticle.setAttribute('data-id', basket.products[0].id);
-    creatArticle.setAttribute('data-color', basket.products[0].color);
-    cartPanel.appendChild(creatArticle);
-    // Insertion div de l'img
-   let creatDivIMG = document.createElement('div');
-    creatDivIMG.className = 'cart__item__img';
-    creatArticle.appendChild(creatDivIMG);
-     // Insertion des images
-     let creatPict = document.createElement('img');
-     creatPict.setAttribute('src', basket.products[1].img);
-     creatPict.setAttribute('alt', "Photographie d'un canapé");
-     creatDivIMG.appendChild(creatPict);
-     console.log(basket.products[1].img)
- }
-function showProductBasketDivH(basket) {
-    // Insertion div content
-    let creatDivContDes = document.createElement('div');
-    creatDivContDes.className = 'cart__item__content';
-    creatArticle.appendChild(creatDivContDes);
-    // Insertion div description
-    let creatDivDes = document.createElement('div');
-    creatDivDes.className = 'cart__item__content__description';
-    creatDivContDes.appendChild(creatDivDes);
-    // Insertion H2
-    let creatH2 = document.createElement('h2');
-    creatH2.textContent = basket.name;
-    creatDivDes.appendChild(creatH2);
+// Affichage des produits dans la page panier (avec les prix en fetch)
+// AFFICHAGE DU/DES PRODUIT(S) PANIER
+function showProductBasketCreatArticle(basket) {
+    // insertion des articles
+    let createArticle = document.createElement('article');
+    createArticle.className = 'cart__item';
+    createArticle.setAttribute('data-id', basket.products[0].id);
+    createArticle.setAttribute('data-color', basket.products[0].color);
+    cartPanel.appendChild(createArticle);
+
+
+    // insertion div de l'img
+
+    let createDivIMG = document.createElement('div');
+    createDivIMG.className = 'cart__item__img';
+    createArticle.appendChild(createDivIMG);
+    // insertion des images
+    let createPict = document.createElement('img');
+    createPict.setAttribute('src', basket.products[0].img);
+    createPict.setAttribute('alt', "Photographie d'un canapé");
+    createDivIMG.appendChild(createPict);
+    console.log(basket.products[0].img)
 }
-function showProductBasketPetPrix(basket) {
-    // Insertion P color
-    let creatpColor = document.createElement('p');
-    creatpColor.textContent = "Couleur : " + basket.color;
-    creatDivDes.appendChild(creatpColor);
-    // Recupération du prix en utilisant l'id du produit
+showProductBasketCreatArticle(basket)
+/*    // insertion div content description
+    let createDivContDes = document.createElement('div');
+    createDivContDes.className = 'cart__item__content';
+    createArticle.appendChild(createDivContDes);
+    // insertion div description
+    let createDivDes = document.createElement('div');
+    createDivDes.className = 'cart__item__content__description';
+    createDivContDes.appendChild(createDivDes);
+    // insertion H2
+    let createH2 = document.createElement('h2');
+    createH2.textContent = products.name;
+    createDivDes.appendChild(createH2);
+    // insertion P color
+    let createpColor = document.createElement('p');
+    createpColor.textContent = "Couleur : " + products.color;
+    createDivDes.appendChild(createpColor);
+    // recupération du prix en utilisant l'id du produit
     let productUnit = "";
-    fetch("http://localhost:3000/api/products/" + basket.id)
+    fetch("http://localhost:3000/api/products/" + products.id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
             productUnit = await resultatAPI;
             // insertion P price
-            let creatpPrice = document.createElement('p');
-            creatpPrice.textContent = "Prix : " + productUnit.price + " € / canapé";
-            creatDivDes.appendChild(creatpPrice);
+            let createpPrice = document.createElement('p');
+            createpPrice.textContent = "Prix : " + productUnit.price + " € / canapé";
+            createDivDes.appendChild(createpPrice);
         })
         .catch(error => alert("Erreur : " + error));
+    // insertion div content settings
+    let createDivContSet = document.createElement('div');
+    createDivContSet.className = 'cart__item__content__settings';
+    createDivContDes.appendChild(createDivContSet);
+    // insertion div settings quantity
+    let createDivContSetQuantity = document.createElement('div');
+    createDivContSetQuantity.className = 'cart__item__content__settings__quantity';
+    createDivContSet.appendChild(createDivContSetQuantity);
+    // insertion P quantity
+    let createpQuantity = document.createElement('p');
+    createpQuantity.textContent = "Qté :";
+    createDivContSetQuantity.appendChild(createpQuantity);
+    // insertion input quantity
+    let createInputQuantity = document.createElement('input');
+    createInputQuantity.className = 'itemQuantity';
+    createInputQuantity.setAttribute('type', 'number');
+    createInputQuantity.setAttribute('name', 'itemQuantity');
+    createInputQuantity.setAttribute('min', '0');
+    createInputQuantity.setAttribute('max', '100');
+    createInputQuantity.setAttribute('value', products.quantity);
+    createDivContSetQuantity.appendChild(createInputQuantity);
+    // insertion div settings delete
+    let createDivContSetDel = document.createElement('div');
+    createDivContSetDel.className = 'cart__item__content__settings__delete';
+    createDivContSet.appendChild(createDivContSetDel);
+    // insertion P delete
+    let createpDelete = document.createElement('p');
+    createpDelete.className = 'deleteItem';
+    createpDelete.textContent = "Supprimer";
+    createDivContSetDel.appendChild(createpDelete);
 }
-function showProductBasketSet(basket) {
-    // Insertion div content settings
-    let creatDivContSet = document.createElement('div');
-    creatDivContSet.className = 'cart__item__content__settings';
-    creatDivContDes.appendChild(creatDivContSet);
-    // Insertion div settings quantity
-    let creatDivContSetQuantity = document.createElement('div');
-    creatDivContSetQuantity.className = 'cart__item__content__settings__quantity';
-    creatDivContSet.appendChild(creatDivContSetQuantity);
-}
-function showProductBasketQuant(basket) {
-    // Insertion P quantity
-    let creatpQuantity = document.createElement('p');
-    creatpQuantity.textContent = "Qté :";
-    creatDivContSetQuantity.appendChild(creatpQuantity);
-    // Insertion input quantity
-    let creatInputQuantity = document.createElement('input');
-    creatInputQuantity.className = 'itemQuantity';
-    creatInputQuantity.setAttribute('type', 'number');
-    creatInputQuantity.setAttribute('name', 'itemQuantity');
-    creatInputQuantity.setAttribute('min', '0');
-    creatInputQuantity.setAttribute('max', '100');
-    creatInputQuantity.setAttribute('value', produit.quantity);
-    creatDivContSetQuantity.appendChild(creatInputQuantity);
-}
-function showProductBasketDel(basket) {
-    // Insertion div settings delete
-    let creatDivContSetDel = document.createElement('div');
-    creatDivContSetDel.className = 'cart__item__content__settings__delete';
-    creatDivContSet.appendChild(creatDivContSetDel);
-    // Insertion P delete item
-    let creatpDelete = document.createElement('p');
-    creatpDelete.className = 'deleteItem';
-    creatpDelete.textContent = "Supprimer";
-    creatDivContSetDel.appendChild(creatpDelete);
+showProductBasket(basket)
+// Récupération de produit dans l'API via son id
+async function getProduct(id) {
+    return fetch("http://localhost:3000/api/products/" + id)
+        .then(response => response.json())
+        .catch(error => alert("Erreur : " + error));
 }*/
-function showProductBasket() {
-    showProductBasketArticleImg(basket)
-    showProductBasketDivH(basket)
-}
-    showProductBasket()
