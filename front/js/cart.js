@@ -26,7 +26,7 @@ function showProductBasketArticleImg(basket) {
      creatDivIMG.appendChild(creatPict);
      console.log(basket.products[1].img)
  }
-/* showProductBasketArticleImg(basket)*/
+/* showProductBasketArticle(basket)*/
 /*function showProductBasketDivH(basket) {
     // Insertion div content
     let creatDivContDes = document.createElement('div');
