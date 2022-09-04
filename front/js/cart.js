@@ -2,15 +2,12 @@
 let basketStr = localStorage.getItem('basket');
 let basket = JSON.parse(basketStr);
 let products = []
-
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
-
 // Affichage des produits dans la page panier (avec les prix en fetch)
 // AFFICHAGE DU/DES PRODUIT(S) PANIER
 function showProductBasket() {
     let createArticle = document.createElement('article');
-
     function showProductBasketCreatArticlePict(basket) {
         // insertion des articles
         createArticle.className = 'cart__item';
@@ -27,12 +24,10 @@ function showProductBasket() {
         createPict.setAttribute('alt', "Photographie d'un canapé");
         createDivIMG.appendChild(createPict);
     }
-
     showProductBasketCreatArticlePict(basket)
     // insertion div content description
     let createDivDes = document.createElement('div');
     let createDivContDes = document.createElement('div');
-
     function showProductBasketCreatContDescr(basket) {
         createDivContDes.className = 'cart__item__content';
         createArticle.appendChild(createDivContDes);
@@ -48,9 +43,7 @@ function showProductBasket() {
         createpColor.textContent = "Couleur : " + basket.products[0].color;
         createDivDes.appendChild(createpColor);
     }
-
     showProductBasketCreatContDescr(basket)
-
     // recupération du prix en utilisant l'id du produit
     function showProductBasketPr(basket) {
         let productUnit = "";
@@ -65,12 +58,10 @@ function showProductBasket() {
             })
             .catch(error => alert("Erreur : " + error));
     }
-
     showProductBasketPr(basket)
     // insertion div content settings
     let createDivContSet = document.createElement('div');
     let createDivContSetQuantity = document.createElement('div');
-
     function showProductBasketQuant(basket) {
         createDivContSet.className = 'cart__item__content__settings';
         createDivContDes.appendChild(createDivContSet);
@@ -135,7 +126,6 @@ function changeQuantity() {
         })
     }
 }
-
 // Suppression d'un canapé
 function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem');
