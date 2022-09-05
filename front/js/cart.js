@@ -53,7 +53,7 @@ function showProductBasket() {
                 productUnit = await resultatAPI
                 // insertion P price
                 let createpPrice = document.createElement('p')
-                createpPrice.textContent = "Prix : " + productUnit.price + " € / canapé"
+                createpPrice.textContent = (`Prix :   ${productUnit.price}   € / canapé`)
                 createDivDes.appendChild(createpPrice)
             })
             .catch(error => alert("Erreur : " + error))
