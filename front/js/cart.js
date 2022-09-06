@@ -7,11 +7,11 @@ let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
 // AFFICHAGE DU/DES PRODUIT(S) PANIER
 let createArticle = document.createElement('article')
-function showProductBasketCreatArticlePict(basket) {
+function showProductBasketCreatArticlePict(basket, productindex) {
         // insertion des articles
     createArticle.className = 'cart__item'
-    createArticle.setAttribute('data-id', basket.products[0].id)
-    createArticle.setAttribute('data-color', basket.products[0].color)
+    createArticle.setAttribute('data-id', basket.products[productindex].id)
+    createArticle.setAttribute('data-color', basket.products[productindex].color)
     cartPanel.appendChild(createArticle)
         // insertion div de l'img
     let createDivIMG = document.createElement('div')
@@ -19,14 +19,14 @@ function showProductBasketCreatArticlePict(basket) {
     createArticle.appendChild(createDivIMG)
         // insertion des images
     let createPict = document.createElement('img')
-    createPict.setAttribute('src', basket.products[0].img)
+    createPict.setAttribute('src', basket.products[productindex].img)
     createPict.setAttribute('alt', "Photographie d'un canapé")
     createDivIMG.appendChild(createPict)
 }
     // insertion div content description
 let createDivDes = document.createElement('div')
 let createDivContDes = document.createElement('div')
-function showProductBasketCreatContDescr(basket) {
+function showProductBasketCreatContDescr(basket, productindex) {
     createDivContDes.className = 'cart__item__content'
     createArticle.appendChild(createDivContDes)
         // insertion div description
@@ -34,17 +34,17 @@ function showProductBasketCreatContDescr(basket) {
     createDivContDes.appendChild(createDivDes)
         // insertion H2
     let createH2 = document.createElement('h2')
-    createH2.textContent = basket.products[0].name
+    createH2.textContent = basket.products[productindex].name
     createDivDes.appendChild(createH2)
         // insertion P color
     let createpColor = document.createElement('p')
-    createpColor.textContent = "Couleur : " + basket.products[0].color
+    createpColor.textContent = "Couleur : " + basket.products[productindex].color
     createDivDes.appendChild(createpColor)
 }
     // recupération du prix en utilisant l'id du produit
-function showProductBasketPr(basket) {
+function showProductBasketPr(basket, productindex) {
     let productUnit = ""
-    fetch("http://localhost:3000/api/products/" + basket.products[0].id)
+    fetch("http://localhost:3000/api/products/" + basket.products[productindex].id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
             productUnit = await resultatAPI
@@ -89,10 +89,10 @@ function showProductBasketInpQuant(basket) {
     createpDelete.textContent = "Supprimer"
     createDivContSetDel.appendChild(createpDelete)
 }
-function showProductBasket() {
-    showProductBasketCreatArticlePict(basket)
-    showProductBasketCreatContDescr(basket)
-    showProductBasketPr(basket)
+function showProductBasket(productindex) {
+    showProductBasketCreatArticlePict(basket, productindex)
+    showProductBasketCreatContDescr(basket, productindex)
+    showProductBasketPr(basket, productindex)
     showProductBasketQuant(basket)
     showProductBasketInpQuant(basket)
 }
@@ -113,7 +113,7 @@ async function showCart() {
         let totalPrice = 0
         for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i]
-            showProductBasket(basketProduct)
+            showProductBasket(i)
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
             totalPrice += productsPrice.price * productQuantity
@@ -142,7 +142,6 @@ function changeQuantity() {
                     basket.totalQuantity = basket.totalQuantity + qtyToAdd
                     let lineBasket = JSON.stringify(basket)
                     localStorage.setItem("basket", lineBasket)
-                    window.location.reload()
                 }
             }
         })
