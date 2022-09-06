@@ -136,7 +136,6 @@ function changeQuantity() {
                 let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
                 let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
                 newQuantityValue = event.target.valueAsNumber
-
                 if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
                     qtyToAdd = newQuantityValue - basketProduct.quantity
                     basketProduct.quantity = newQuantityValue
@@ -158,18 +157,14 @@ function delProduct() {
         delItemUnit.addEventListener('click', function(event) {
             let articleDelItemID = event.target.closest('article').getAttribute("data-id")
             let articleDelItemColor = event.target.closest('article').getAttribute("data-color")
-
             let basket = JSON.parse(basketStr)
             productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
-
             result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
             basket.products = result
-
             newQuantity = basket.totalQuantity - productToDel.quantity
             basket.totalQuantity = newQuantity
             priceToDel = productToDel.quantity * productToDel.price
             alert('Vous avez bien supprimé votre produit du panier !')
-
             if (basket.totalQuantity == 0) {
                 localStorage.clear()
                 window.location.reload()
