@@ -6,7 +6,6 @@ let products = []
 let cartPanel = document.querySelector('#cart__items');
 // Affichage des produits dans la page panier (avec les prix en fetch)
 // AFFICHAGE DU/DES PRODUIT(S) PANIER
-function showProductBasket() {
     let createArticle = document.createElement('article')
     function showProductBasketCreatArticlePict(basket) {
         // insertion des articles
@@ -24,7 +23,6 @@ function showProductBasket() {
         createPict.setAttribute('alt', "Photographie d'un canapé")
         createDivIMG.appendChild(createPict)
     }
-    showProductBasketCreatArticlePict(basket)
     // insertion div content description
     let createDivDes = document.createElement('div')
     let createDivContDes = document.createElement('div')
@@ -43,7 +41,6 @@ function showProductBasket() {
         createpColor.textContent = "Couleur : " + basket.products[0].color
         createDivDes.appendChild(createpColor)
     }
-    showProductBasketCreatContDescr(basket)
     // recupération du prix en utilisant l'id du produit
     function showProductBasketPr(basket) {
         let productUnit = ""
@@ -58,7 +55,6 @@ function showProductBasket() {
             })
             .catch(error => alert("Erreur : " + error))
     }
-    showProductBasketPr(basket)
     // insertion div content settings
     let createDivContSet = document.createElement('div')
     let createDivContSetQuantity = document.createElement('div')
@@ -73,7 +69,6 @@ function showProductBasket() {
         createpQuantity.textContent = "Qté :"
         createDivContSetQuantity.appendChild(createpQuantity)
     }
-    showProductBasketQuant(basket)
     // insertion input quantity
     function showProductBasketInpQuant(basket) {
         let createInputQuantity = document.createElement('input')
@@ -94,6 +89,11 @@ function showProductBasket() {
         createpDelete.textContent = "Supprimer"
         createDivContSetDel.appendChild(createpDelete)
     }
+function showProductBasket() {
+    showProductBasketCreatArticlePict(basket)
+    showProductBasketCreatContDescr(basket)
+    showProductBasketPr(basket)
+    showProductBasketQuant(basket)
     showProductBasketInpQuant(basket)
 }
 // Récupération de produit dans l'API via son id
@@ -122,7 +122,6 @@ async function showCart() {
         }
         let totalQuantity = document.querySelector('#totalQuantity')
         totalQuantity.textContent = basket.totalQuantity
-
     }
 }
 showCart()
