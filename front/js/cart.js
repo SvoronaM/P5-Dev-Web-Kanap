@@ -98,10 +98,34 @@ function showProductBasket() {
 }
 // Récupération de produit dans l'API via son id
 async function getProduct(id) {
- return fetch("http://localhost:3000/api/products/" + id)
-     .then(response => response.json())
-     .catch(error => alert("Erreur : " + error))
+    return fetch("http://localhost:3000/api/products/" + id)
+        .then(response => response.json())
+        .catch(error => alert("Erreur : " + error))
 }
+// SI le panier est vide, afficher "panier vide"
+// SINON parser le panier, et utiliser la function showproductbasket
+async function showCart() {
+    if (basketStr == null) {
+        let createpEmpty = document.createElement('p')
+        createpEmpty.textContent = 'Votre panier est vide'
+        cartPanel.appendChild(createpEmpty)
+    } else {
+        let totalPrice = 0
+        for (let i = 0 ; i < basket.products.length; i++) {
+            basketProduct = basket.products[i]
+            showProductBasket(basketProduct)
+            let productsPrice = await getProduct(basketProduct.id)
+            let productQuantity = basketProduct.quantity
+            totalPrice += productsPrice.price * productQuantity
+            let totalPriceElt = document.querySelector('#totalPrice')
+            totalPriceElt.textContent = totalPrice
+        }
+        let totalQuantity = document.querySelector('#totalQuantity')
+        totalQuantity.textContent = basket.totalQuantity
+
+    }
+}
+showCart()
 // Changement quantité et prix
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
@@ -126,6 +150,7 @@ function changeQuantity() {
         })
     }
 }
+changeQuantity()
 // Suppression d'un canapé
 function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem')
@@ -157,28 +182,4 @@ function delProduct() {
         })
     }
 }
-// SI le panier est vide, afficher "panier vide"
-// SINON parser le panier, et utiliser la function showproductbasket
-async function showCart() {
-    if (basketStr == null) {
-        let createpEmpty = document.createElement('p')
-        createpEmpty.textContent = 'Votre panier est vide'
-        cartPanel.appendChild(createpEmpty)
-    } else {
-        let totalPrice = 0
-        for (let i = 0 ; i < basket.products.length; i++) {
-            basketProduct = basket.products[i]
-            showProductBasket(basketProduct)
-            let productsPrice = await getProduct(basketProduct.id)
-            let productQuantity = basketProduct.quantity
-            totalPrice += productsPrice.price * productQuantity
-            let totalPriceElt = document.querySelector('#totalPrice')
-            totalPriceElt.textContent = totalPrice
-        }
-        let totalQuantity = document.querySelector('#totalQuantity')
-        totalQuantity.textContent = basket.totalQuantity
-        changeQuantity()
-        delProduct()
-    }
-}
-showCart()
+delProduct()
