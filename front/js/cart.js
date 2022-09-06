@@ -23,7 +23,6 @@ function showProductBasket(produit) {
         createPict.setAttribute('src', produit.img)
         createPict.setAttribute('alt', "Photographie d'un canapé")
         createDivIMG.appendChild(createPict)
-
     }
         showProductBasketCreatArticlePict(produit)
         // insertion div content description
@@ -128,55 +127,52 @@ async function showCart() {
 showCart()
 // Changement quantité et prix
 function changeQuantity() {
-    let quantityItem = document.querySelectorAll('.itemQuantity');
+    let quantityItem = document.querySelectorAll('.itemQuantity')
     for (let k = 0; k < quantityItem.length; k++) {
-        quantityItemUnit = quantityItem[k];
+        quantityItemUnit = quantityItem[k]
         quantityItemUnit.addEventListener('change', function(event) {
             for (let l = 0 ; l < basket.products.length; l++) {
-                basketProduct = basket.products[l];
-                let articleQuantityItemID = event.target.closest('article').getAttribute("data-id");
-                let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color");
-                newQuantityValue = event.target.valueAsNumber;
-
+                basketProduct = basket.products[l]
+                let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
+                let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
+                newQuantityValue = event.target.valueAsNumber
                 if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
-                    qtyToAdd = newQuantityValue - basketProduct.quantity;
-                    basketProduct.quantity = newQuantityValue;
-                    basket.totalQuantity = basket.totalQuantity + qtyToAdd;
-                    let lineBasket = JSON.stringify(basket);
-                    localStorage.setItem("basket", lineBasket);
-                    window.location.reload();
-                    console.log('coucou')
+                    qtyToAdd = newQuantityValue - basketProduct.quantity
+                    basketProduct.quantity = newQuantityValue
+                    basket.totalQuantity = basket.totalQuantity + qtyToAdd
+                    let lineBasket = JSON.stringify(basket)
+                    localStorage.setItem("basket", lineBasket)
                 }
             }
         })
-    };
+    }
 }
 changeQuantity()
 // Suppression d'un canapé
 function delProduct() {
-    let delItem = document.querySelectorAll('.deleteItem');
+    let delItem = document.querySelectorAll('.deleteItem')
     for (let j = 0; j < delItem.length; j++) {
-        delItemUnit = delItem[j];
+        delItemUnit = delItem[j]
         delItemUnit.addEventListener('click', function(event) {
-            let articleDelItemID = event.target.closest('article').getAttribute("data-id");
-            let articleDelItemColor = event.target.closest('article').getAttribute("data-color");
-            let basket = JSON.parse(basketStr);
-            productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor);
-            result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor);
-            basket.products = result;
-            newQuantity = basket.totalQuantity - productToDel.quantity;
-            basket.totalQuantity = newQuantity;
-            priceToDel = productToDel.quantity * productToDel.price;
-            alert('Vous avez bien supprimé votre produit du panier !');
+            let articleDelItemID = event.target.closest('article').getAttribute("data-id")
+            let articleDelItemColor = event.target.closest('article').getAttribute("data-color")
+            let basket = JSON.parse(basketStr)
+            productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
+            result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
+            basket.products = result
+            newQuantity = basket.totalQuantity - productToDel.quantity
+            basket.totalQuantity = newQuantity
+            priceToDel = productToDel.quantity * productToDel.price
+            alert('Vous avez bien supprimé votre produit du panier !')
             if (basket.totalQuantity == 0) {
-                localStorage.clear();
+                localStorage.clear()
                 window.location.reload()
             } else {
-                let lineBasket = JSON.stringify(basket);
-                localStorage.setItem("basket", lineBasket);
-                window.location.reload();
+                let lineBasket = JSON.stringify(basket)
+                localStorage.setItem("basket", lineBasket)
+                window.location.reload()
             }
         })
-    };
+    }
 }
 delProduct()
