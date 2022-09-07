@@ -122,32 +122,34 @@ async function showCart() {
         }
         let totalQuantity = document.querySelector('#totalQuantity')
         totalQuantity.textContent = basket.totalQuantity
+        changeQuantity()
+        delProduct()
     }
 }
 showCart()
 // Changement quantité et prix
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
-    for (let k = 0; k < quantityItem.length; k++) {
+   for (let k = 0; k < quantityItem.length; k++) {
         quantityItemUnit = quantityItem[k]
         quantityItemUnit.addEventListener('change', function(event) {
-            for (let l = 0 ; l < basket.products.length; l++) {
-                basketProduct = basket.products[l]
-                let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
-                let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
-                newQuantityValue = event.target.valueAsNumber
-                if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
-                    qtyToAdd = newQuantityValue - basketProduct.quantity
-                    basketProduct.quantity = newQuantityValue
-                    basket.totalQuantity = basket.totalQuantity + qtyToAdd
-                    let lineBasket = JSON.stringify(basket)
-                    localStorage.setItem("basket", lineBasket)
-                }
-            }
-        })
-    }
+                for (let l = 0 ; l < basket.products.length; l++) {
+                   basketProduct = basket.products[l]
+                   let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
+                   let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
+                   newQuantityValue = event.target.valueAsNumber
+                   if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
+                       qtyToAdd = newQuantityValue - basketProduct.quantity
+                       basketProduct.quantity = newQuantityValue
+                       basket.totalQuantity = basket.totalQuantity + qtyToAdd
+                       let lineBasket = JSON.stringify(basket)
+                       localStorage.setItem("basket", lineBasket)
+                       window.location.reload();
+                   }
+               }
+           })
+       }
 }
-changeQuantity()
 // Suppression d'un canapé
 function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem')
@@ -175,4 +177,4 @@ function delProduct() {
         })
     }
 }
-delProduct()
+
