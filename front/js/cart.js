@@ -144,7 +144,7 @@ function changeQuantity() {
                        basket.totalQuantity = basket.totalQuantity + qtyToAdd
                        let lineBasket = JSON.stringify(basket)
                        localStorage.setItem("basket", lineBasket)
-                       window.location.reload();
+                       history.pushState( basketProduct.id, '', "http://localhost:3000/api/products/");
                    }
                }
            })
