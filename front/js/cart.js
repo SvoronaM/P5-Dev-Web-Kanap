@@ -144,7 +144,9 @@ function changeQuantity() {
                        basket.totalQuantity = basket.totalQuantity + qtyToAdd
                        let lineBasket = JSON.stringify(basket)
                        localStorage.setItem("basket", lineBasket)
-                       history.pushState( basketProduct.id, '', "http://localhost:3000/api/products/");
+                       history.pushState(null, "", 'http://localhost:63342/P5-Dev-Web-Kanap/front/html/cart.html?_ijt=nopd3r7q0s6l12fsajnfov60g1&_ij_reload=RELOAD_ON_SAVE');
+                       // change the content
+                       content.innerHTML = basket.totalQuantity
                    }
                }
            })
