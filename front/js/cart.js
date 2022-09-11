@@ -210,7 +210,7 @@ form.address.addEventListener('change', function(e) {
     } else {
         adressErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse postale.'
     }
-});
+})
 let cityErrorMsg = document.querySelector('#cityErrorMsg')
 form.city.addEventListener('change', function(e) {
     let value = e.target.value
