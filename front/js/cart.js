@@ -144,9 +144,7 @@ function changeQuantity() {
                        basket.totalQuantity = basket.totalQuantity + qtyToAdd
                        let lineBasket = JSON.stringify(basket)
                        localStorage.setItem("basket", lineBasket)
-                       history.pushState(null, "", 'http://localhost:63342/P5-Dev-Web-Kanap/front/html/cart.html?_ijt=nopd3r7q0s6l12fsajnfov60g1&_ij_reload=RELOAD_ON_SAVE');
-                       // change the content
-                       content.innerHTML = basket.totalQuantity
+                       window.location.reload()
                    }
                }
            })
@@ -179,61 +177,55 @@ function delProduct() {
         })
     }
 }
-
 // Validation formulaire
-let form = document.querySelector(".cart__order__form");
-
+let form = document.querySelector(".cart__order__form")
 // REGEX
-let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$");
-let nameRegExp = new RegExp("^[A-zÀ-ú \-]+$");
-let emailRegExp = new RegExp("^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$");
+let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$")
+let nameRegExp = new RegExp("^[A-zÀ-ú \-]+$")
+let emailRegExp = new RegExp("^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$")
 
-let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg');
+let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 form.firstName.addEventListener('change', function(e) {
-    let value = e.target.value;
+    let value = e.target.value
     if (nameRegExp.test(value)){
-        firstNameErrorMsg.innerHTML = '';
+        firstNameErrorMsg.innerText = ''
     } else {
-        firstNameErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre prénom.';
+        firstNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre prénom.'
     }
-});
-
-let lastNameErrorMsg = form.lastName.nextElementSibling;
+})
+let lastNameErrorMsg = form.lastName.nextElementSibling
 form.lastName.addEventListener('change', function(e) {
-    let value = e.target.value;
+    let value = e.target.value
     if (nameRegExp.test(value)){
-        lastNameErrorMsg.innerHTML = '';
+        lastNameErrorMsg.innerText = ''
     } else {
-        lastNameErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre nom.';
+        lastNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre nom.'
     }
-});
-
-let adressErrorMsg = document.querySelector('#addressErrorMsg');
+})
+let adressErrorMsg = document.querySelector('#addressErrorMsg')
 form.address.addEventListener('change', function(e) {
-    let value = e.target.value;
+    let value = e.target.value
     if (adressRegExp.test(value)){
-        adressErrorMsg.innerHTML = '';
+        adressErrorMsg.innerText = ''
     } else {
-        adressErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre adresse postale.';
+        adressErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse postale.'
     }
 });
-
-let cityErrorMsg = document.querySelector('#cityErrorMsg');
+let cityErrorMsg = document.querySelector('#cityErrorMsg')
 form.city.addEventListener('change', function(e) {
-    let value = e.target.value;
+    let value = e.target.value
     if (nameRegExp.test(value)){
-        cityErrorMsg.innerHTML = '';
+        cityErrorMsg.innerText = ''
     } else {
-        cityErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre ville.';
+        cityErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre ville.'
     }
-});
-
-let emailErrorMsg = document.querySelector('#emailErrorMsg');
+})
+let emailErrorMsg = document.querySelector('#emailErrorMsg')
 form.email.addEventListener('change', function(e) {
-    let value = e.target.value;
+    let value = e.target.value
     if (emailRegExp.test(value)){
-        emailErrorMsg.innerHTML = '';
+        emailErrorMsg.innerText = ''
     } else {
-        emailErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre adresse email.';
+        emailErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse email.'
     }
-});
+})
