@@ -179,11 +179,11 @@ function delProduct() {
 }
 // Validation formulaire
 let form = document.querySelector(".cart__order__form")
-// REGEX
+// RegExp - correspondances d'un texte avec un motif donné
 let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$")
 let nameRegExp = new RegExp("^[A-zÀ-ú \-]+$")
 let emailRegExp = new RegExp("^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$")
-
+// Prénom
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 form.firstName.addEventListener('change', function(e) {
     let value = e.target.value
@@ -193,6 +193,7 @@ form.firstName.addEventListener('change', function(e) {
         firstNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre prénom.'
     }
 })
+// Nom
 let lastNameErrorMsg = form.lastName.nextElementSibling
 form.lastName.addEventListener('change', function(e) {
     let value = e.target.value
@@ -202,6 +203,7 @@ form.lastName.addEventListener('change', function(e) {
         lastNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre nom.'
     }
 })
+// Adresse
 let adressErrorMsg = document.querySelector('#addressErrorMsg')
 form.address.addEventListener('change', function(e) {
     let value = e.target.value
@@ -211,6 +213,7 @@ form.address.addEventListener('change', function(e) {
         adressErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse postale.'
     }
 })
+// Ville
 let cityErrorMsg = document.querySelector('#cityErrorMsg')
 form.city.addEventListener('change', function(e) {
     let value = e.target.value
@@ -220,6 +223,7 @@ form.city.addEventListener('change', function(e) {
         cityErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre ville.'
     }
 })
+// Email
 let emailErrorMsg = document.querySelector('#emailErrorMsg')
 form.email.addEventListener('change', function(e) {
     let value = e.target.value
