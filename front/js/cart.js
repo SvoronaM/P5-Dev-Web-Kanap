@@ -4,8 +4,7 @@ let basket = JSON.parse(basketStr)
 
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
-// Affichage des produits dans la page panier (avec les prix en fetch)
-// AFFICHAGE DU/DES PRODUIT(S) PANIER
+// Affichage des produits dans la page panier
 function showProductBasket(produit) {
     let createArticle = document.createElement('article')
     function showProductBasketCreatArticlePict(produit) {
