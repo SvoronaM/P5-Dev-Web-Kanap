@@ -4,96 +4,100 @@ let basket = JSON.parse(basketStr)
 
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
+
+function showProductBasketCreatArticlePict(produit, createArticle) {
+    // insertion des articles
+    createArticle.className = 'cart__item'
+    createArticle.setAttribute('data-id', produit.id)
+    createArticle.setAttribute('data-color', produit.color)
+    cartPanel.appendChild(createArticle)
+    // insertion div de l'img
+    let createDivIMG = document.createElement('div')
+    createDivIMG.className = 'cart__item__img'
+    createArticle.appendChild(createDivIMG)
+    // insertion des images
+    let createPict = document.createElement('img')
+    createPict.setAttribute('src', produit.img)
+    createPict.setAttribute('alt', "Photographie d'un canapé")
+    createDivIMG.appendChild(createPict)
+}
+// insertion div content description
+function showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes) {
+    createDivContDes.className = 'cart__item__content'
+    createArticle.appendChild(createDivContDes)
+    // insertion div description
+    createDivDes.className = 'cart__item__content__description'
+    createDivContDes.appendChild(createDivDes)
+    // insertion H2
+    let createH2 = document.createElement('h2')
+    createH2.textContent = produit.name
+    createDivDes.appendChild(createH2)
+    // insertion P color
+    let createpColor = document.createElement('p')
+    createpColor.textContent = "Couleur : " + produit.color
+    createDivDes.appendChild(createpColor)
+}
+// recupération du prix en utilisant l'id du produit
+function showProductBasketPr(produit, createDivDes) {
+    let productUnit = ""
+    fetch("http://localhost:3000/api/products/" + produit.id)
+        .then(response => response.json())
+        .then(async function (resultatAPI) {
+            productUnit = await resultatAPI
+            // insertion P price
+            let createpPrice = document.createElement('p')
+            createpPrice.textContent = (`Prix :   ${productUnit.price}   € / canapé`)
+            createDivDes.appendChild(createpPrice)
+        })
+        .catch(error => alert("Erreur : " + error))
+}
+// insertion div content settings
+function showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity) {
+    createDivContSet.className = 'cart__item__content__settings'
+    createDivContDes.appendChild(createDivContSet)
+    // insertion div settings quantity
+    createDivContSetQuantity.className = 'cart__item__content__settings__quantity'
+    createDivContSet.appendChild(createDivContSetQuantity)
+    // insertion P quantity
+    let createpQuantity = document.createElement('p')
+    createpQuantity.textContent = "Qté :"
+    createDivContSetQuantity.appendChild(createpQuantity)
+}
+// insertion input quantity
+function showProductBasketInpQuant(produit, createDivContSetQuantity) {
+    let createInputQuantity = document.createElement('input')
+    createInputQuantity.className = 'itemQuantity'
+    createInputQuantity.setAttribute('type', 'number')
+    createInputQuantity.setAttribute('name', 'itemQuantity')
+    createInputQuantity.setAttribute('min', '0')
+    createInputQuantity.setAttribute('max', '100')
+    createInputQuantity.setAttribute('value', produit.quantity)
+    createDivContSetQuantity.appendChild(createInputQuantity)
+}
+    // insertion div settings delete
+function showProductBasketDelp(produit, createDivContSet) {
+    let createDivContSetDel = document.createElement('div')
+    createDivContSetDel.className = 'cart__item__content__settings__delete'
+    createDivContSet.appendChild(createDivContSetDel)
+    // insertion P delete
+    let createpDelete = document.createElement('p')
+    createpDelete.className = 'deleteItem'
+    createpDelete.textContent = "Supprimer"
+    createDivContSetDel.appendChild(createpDelete)
+}
 // Affichage des produits dans la page panier
 function showProductBasket(produit) {
     let createArticle = document.createElement('article')
-    function showProductBasketCreatArticlePict(produit) {
-            // insertion des articles
-        createArticle.className = 'cart__item'
-        createArticle.setAttribute('data-id', produit.id)
-        createArticle.setAttribute('data-color', produit.color)
-        cartPanel.appendChild(createArticle)
-            // insertion div de l'img
-        let createDivIMG = document.createElement('div')
-        createDivIMG.className = 'cart__item__img'
-        createArticle.appendChild(createDivIMG)
-            // insertion des images
-        let createPict = document.createElement('img')
-        createPict.setAttribute('src', produit.img)
-        createPict.setAttribute('alt', "Photographie d'un canapé")
-        createDivIMG.appendChild(createPict)
-    }
-        showProductBasketCreatArticlePict(produit)
-        // insertion div content description
+    showProductBasketCreatArticlePict(produit, createArticle)
     let createDivDes = document.createElement('div')
     let createDivContDes = document.createElement('div')
-    function showProductBasketCreatContDescr(produit) {
-        createDivContDes.className = 'cart__item__content'
-        createArticle.appendChild(createDivContDes)
-            // insertion div description
-        createDivDes.className = 'cart__item__content__description'
-        createDivContDes.appendChild(createDivDes)
-            // insertion H2
-        let createH2 = document.createElement('h2')
-        createH2.textContent = produit.name
-        createDivDes.appendChild(createH2)
-            // insertion P color
-        let createpColor = document.createElement('p')
-        createpColor.textContent = "Couleur : " + produit.color
-        createDivDes.appendChild(createpColor)
-    }
-        showProductBasketCreatContDescr(produit)
-        // recupération du prix en utilisant l'id du produit
-    function showProductBasketPr(produit) {
-        let productUnit = ""
-        fetch("http://localhost:3000/api/products/" + produit.id)
-            .then(response => response.json())
-            .then(async function (resultatAPI) {
-                productUnit = await resultatAPI
-                    // insertion P price
-                let createpPrice = document.createElement('p')
-                createpPrice.textContent = (`Prix :   ${productUnit.price}   € / canapé`)
-                createDivDes.appendChild(createpPrice)
-            })
-            .catch(error => alert("Erreur : " + error))
-    }
-        showProductBasketPr(produit)
-        // insertion div content settings
+    showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes)
+    showProductBasketPr(produit, createDivDes)
     let createDivContSet = document.createElement('div')
     let createDivContSetQuantity = document.createElement('div')
-    function showProductBasketQuant(produit) {
-        createDivContSet.className = 'cart__item__content__settings'
-        createDivContDes.appendChild(createDivContSet)
-            // insertion div settings quantity
-        createDivContSetQuantity.className = 'cart__item__content__settings__quantity'
-        createDivContSet.appendChild(createDivContSetQuantity)
-            // insertion P quantity
-        let createpQuantity = document.createElement('p')
-        createpQuantity.textContent = "Qté :"
-        createDivContSetQuantity.appendChild(createpQuantity)
-    }
-        showProductBasketQuant(produit)
-        // insertion input quantity
-    function showProductBasketInpQuant(produit) {
-        let createInputQuantity = document.createElement('input')
-        createInputQuantity.className = 'itemQuantity'
-        createInputQuantity.setAttribute('type', 'number')
-        createInputQuantity.setAttribute('name', 'itemQuantity')
-        createInputQuantity.setAttribute('min', '0')
-        createInputQuantity.setAttribute('max', '100')
-        createInputQuantity.setAttribute('value', produit.quantity)
-        createDivContSetQuantity.appendChild(createInputQuantity)
-            // insertion div settings delete
-        let createDivContSetDel = document.createElement('div')
-        createDivContSetDel.className = 'cart__item__content__settings__delete'
-        createDivContSet.appendChild(createDivContSetDel)
-            // insertion P delete
-        let createpDelete = document.createElement('p')
-        createpDelete.className = 'deleteItem'
-        createpDelete.textContent = "Supprimer"
-        createDivContSetDel.appendChild(createpDelete)
-    }
-        showProductBasketInpQuant(produit)
+    showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity)
+    showProductBasketInpQuant(produit, createDivContSetQuantity)
+    showProductBasketDelp(produit, createDivContSet)
 }
 // Récupération de produit dans l'API via son id
 async function getProduct(id) {
@@ -101,8 +105,8 @@ async function getProduct(id) {
         .then(response => response.json())
         .catch(error => alert("Erreur : " + error))
 }
-// SI le panier est vide, afficher "panier vide"
-// SINON parser le panier, et utiliser la function showproductbasket
+// Si le panier est vide, afficher "panier vide"
+// Si non parser le panier, et utiliser la function showproductbasket
 async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')
