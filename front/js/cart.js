@@ -88,13 +88,13 @@ function showProductBasketDelp(produit, createDivContSet) {
 // Affichage des produits dans la page panier
 function showProductBasket(produit) {
     let createArticle = document.createElement('article')
-    showProductBasketCreatArticlePict(produit, createArticle)
     let createDivDes = document.createElement('div')
     let createDivContDes = document.createElement('div')
-    showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes)
-    showProductBasketPr(produit, createDivDes)
     let createDivContSet = document.createElement('div')
     let createDivContSetQuantity = document.createElement('div')
+    showProductBasketCreatArticlePict(produit, createArticle)
+    showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes)
+    showProductBasketPr(produit, createDivDes)
     showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity)
     showProductBasketInpQuant(produit, createDivContSetQuantity)
     showProductBasketDelp(produit, createDivContSet)
@@ -115,7 +115,7 @@ async function showCart() {
     } else {
         let totalPrice = 0
         for (let i = 0 ; i < basket.products.length; i++) {
-            basketProduct = basket.products[i];
+            basketProduct = basket.products[i]
             showProductBasket(basketProduct)
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
@@ -147,7 +147,7 @@ function changeQuantity() {
                        basket.totalQuantity = basket.totalQuantity + qtyToAdd
                        let lineBasket = JSON.stringify(basket)
                        localStorage.setItem("basket", lineBasket)
-                       window.location.reload()
+                       window.location.reload();
                    }
                }
            })
@@ -234,5 +234,57 @@ form.email.addEventListener('change', function(e) {
         emailErrorMsg.innerText = ''
     } else {
         emailErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse email.'
+    }
+})
+// Passer commande
+let btnOrder = document.querySelector('#order')
+
+btnOrder.addEventListener('click', function(e) {
+    e.preventDefault()
+    let inputFirstName = document.getElementById('firstName')
+    let inputLastName = document.getElementById('lastName')
+    let inputAddress = document.getElementById('address')
+    let inputCity = document.getElementById('city')
+    let inputEmail = document.getElementById('email')
+
+    if (basketStr == null) {
+        alert("Pour passer commande, veuillez ajouter des produits à votre panier")
+        e.preventDefault()
+    } else if (firstName.value === "" || lastName.value === "" || address.value === "" || city.value === "" || email.value === "") {
+        alert("Vous devez renseigner vos coordonnées pour passer la commande !")
+        e.preventDefault();
+    } else if (nameRegExp.test(inputFirstName.value) ==  false || nameRegExp.test(inputLastName.value) ==  false || adressRegExp.test(inputAddress.value) ==  false || nameRegExp.test(inputCity.value) ==  false || emailRegExp.test(inputEmail.value) ==  false) {
+        alert("Vérifiez vos coordonnées pour passer la commande !")
+        e.preventDefault()
+    } else {
+        productID = []
+        for (let m = 0; m < basket.products.length; m++) {
+            productID.push(basket.products[m].id)
+        }
+        let order = {
+            contact : {
+                firstName: inputFirstName.value,
+                lastName: inputLastName.value,
+                address: inputAddress.value,
+                city: inputCity.value,
+                email: inputEmail.value,
+            },
+            products : productID
+        }
+        fetch("http://localhost:3000/api/products/order", {
+            method: 'POST',
+            body: JSON.stringify(order),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then((response) => response.json())
+            .then(async function (resultOrder) {
+                order = await resultOrder
+                document.location.href = "confirmation.html?orderId=" + order.orderId
+                localStorage.clear()
+                console.log(order.orderId)
+            })
     }
 })
