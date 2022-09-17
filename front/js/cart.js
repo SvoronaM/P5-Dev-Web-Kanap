@@ -158,9 +158,10 @@ function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem')
     for (let j = 0; j < delItem.length; j++) {
         delItemUnit = delItem[j]
-        delItemUnit.addEventListener('click', function(event) {
-            let articleDelItemID = event.target.closest('article').getAttribute("data-id")
-            let articleDelItemColor = event.target.closest('article').getAttribute("data-color")
+        // e - Event. Event.target - C'est une référence à l'objet qui a envoyé l'événement. La méthode closest() traverse l'élément courant
+        delItemUnit.addEventListener('click', function(e) {
+            let articleDelItemID = e.target.closest('article').getAttribute("data-id")
+            let articleDelItemColor = e.target.closest('article').getAttribute("data-color")
             let basket = JSON.parse(basketStr)
             productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
             result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
