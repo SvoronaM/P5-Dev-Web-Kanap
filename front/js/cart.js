@@ -284,7 +284,6 @@ btnOrder.addEventListener('click', function(e) {
                 order = await resultOrder
                 document.location.href = "confirmation.html?orderId=" + order.orderId
                 localStorage.clear()
-                console.log(order.orderId)
             })
     }
 })
