@@ -40,6 +40,7 @@ function showProductBasketCreatContDescr(produit, createArticle, createDivDes, c
 // recupération du prix en utilisant l'id du produit
 function showProductBasketPr(produit, createDivDes) {
     let productUnit = ""
+    // L'API Fetch fournit une interface pour la récupération de ressources
     fetch("http://localhost:3000/api/products/" + produit.id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
@@ -139,19 +140,19 @@ function changeQuantity() {
                 for (let l = 0 ; l < basket.products.length; l++) {
                    basketProduct = basket.products[l]
                    let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
-                   let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
                    newQuantityValue = event.target.valueAsNumber
-                   if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
+                   if (basketProduct.id == articleQuantityItemID ) {
                        qtyToAdd = newQuantityValue - basketProduct.quantity
                        basketProduct.quantity = newQuantityValue
                        basket.totalQuantity = basket.totalQuantity + qtyToAdd
+                       // JSON.stringify() method converts a JavaScript value to a JSON string
                        let lineBasket = JSON.stringify(basket)
                        localStorage.setItem("basket", lineBasket)
-                       window.location.reload();
+                       window.location.reload(false)
                    }
-               }
-           })
-       }
+                }
+        })
+   }
 }
 // Suppression d'un canapé
 function delProduct() {
@@ -161,10 +162,11 @@ function delProduct() {
         // e - Event. Event.target - C'est une référence à l'objet qui a envoyé l'événement. La méthode closest() traverse l'élément courant
         delItemUnit.addEventListener('click', function(e) {
             let articleDelItemID = e.target.closest('article').getAttribute("data-id")
-            let articleDelItemColor = e.target.closest('article').getAttribute("data-color")
             let basket = JSON.parse(basketStr)
-            productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
-            result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
+            //  find() renvoie la valeur du premier élément trouvé dans le tableau qui respecte la condition donnée
+            productToDel = basket.products.find(el => el.id == articleDelItemID)
+            // filter() crée et retourne un nouveau tableau contenant tous les éléments du tableau d'origine
+            result = basket.products.filter(el => el.id !== articleDelItemID)
             basket.products = result
             newQuantity = basket.totalQuantity - productToDel.quantity
             basket.totalQuantity = newQuantity
@@ -172,11 +174,11 @@ function delProduct() {
             alert('Vous avez bien supprimé votre produit du panier !')
             if (basket.totalQuantity == 0) {
                 localStorage.clear()
-                window.location.reload()
+                window.location.reload(false)
             } else {
                 let lineBasket = JSON.stringify(basket)
                 localStorage.setItem("basket", lineBasket)
-                window.location.reload()
+                window.location.reload(false)
             }
         })
     }
@@ -254,7 +256,8 @@ btnOrder.addEventListener('click', function(e) {
     } else if (firstName.value === "" || lastName.value === "" || address.value === "" || city.value === "" || email.value === "") {
         alert("Vous devez renseigner vos coordonnées pour passer la commande !")
         e.preventDefault();
-    } else if (nameRegExp.test(inputFirstName.value) ==  false || nameRegExp.test(inputLastName.value) ==  false || adressRegExp.test(inputAddress.value) ==  false || nameRegExp.test(inputCity.value) ==  false || emailRegExp.test(inputEmail.value) ==  false) {
+    } else if (nameRegExp.test(inputFirstName.value) ==  false || nameRegExp.test(inputLastName.value) ==  false || adressRegExp.test(inputAddress.value)
+        ==  false || nameRegExp.test(inputCity.value) ==  false || emailRegExp.test(inputEmail.value) ==  false) {
         alert("Vérifiez vos coordonnées pour passer la commande !")
         e.preventDefault()
     } else {
@@ -273,6 +276,7 @@ btnOrder.addEventListener('click', function(e) {
             products : productID
         }
         fetch("http://localhost:3000/api/products/order", {
+            // .post() permet d'envoyer des données
             method: 'POST',
             body: JSON.stringify(order),
             headers: {

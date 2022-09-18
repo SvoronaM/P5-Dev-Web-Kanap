@@ -113,6 +113,6 @@ sendToBasket.addEventListener('click', function (event) {
         alert(`Votre commande de ${choixProduct.quantity}  ${productUnit.name}  ${choixProduct.color} est bien ajoutée au panier !`)
         let lineBasket = JSON.stringify(basket)
         localStorage.setItem("basket", lineBasket)
-        window.location.reload()
+        window.location.reload(false)
     }
 })
