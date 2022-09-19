@@ -1,4 +1,4 @@
-// Récupération du contenu du panier à partir du localstorage
+/// Récupération du contenu du panier à partir du localstorage
 let basketStr = localStorage.getItem('basket')
 let basket = JSON.parse(basketStr)
 
@@ -75,7 +75,7 @@ function showProductBasketInpQuant(produit, createDivContSetQuantity) {
     createInputQuantity.setAttribute('value', produit.quantity)
     createDivContSetQuantity.appendChild(createInputQuantity)
 }
-    // insertion div settings delete
+// insertion div settings delete
 function showProductBasketDelp(produit, createDivContSet) {
     let createDivContSetDel = document.createElement('div')
     createDivContSetDel.className = 'cart__item__content__settings__delete'
@@ -134,25 +134,26 @@ showCart()
 // Changement quantité et prix
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
-   for (let k = 0; k < quantityItem.length; k++) {
+    for (let k = 0; k < quantityItem.length; k++) {
         quantityItemUnit = quantityItem[k]
         quantityItemUnit.addEventListener('change', function(event) {
-                for (let l = 0 ; l < basket.products.length; l++) {
-                   basketProduct = basket.products[l]
-                   let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
-                   newQuantityValue = event.target.valueAsNumber
-                   if (basketProduct.id == articleQuantityItemID ) {
-                       qtyToAdd = newQuantityValue - basketProduct.quantity
-                       basketProduct.quantity = newQuantityValue
-                       basket.totalQuantity = basket.totalQuantity + qtyToAdd
-                       // JSON.stringify() method converts a JavaScript value to a JSON string
-                       let lineBasket = JSON.stringify(basket)
-                       localStorage.setItem("basket", lineBasket)
-                       window.location.reload(false)
-                   }
+            for (let l = 0 ; l < basket.products.length; l++) {
+                basketProduct = basket.products[l]
+                let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
+                let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
+                newQuantityValue = event.target.valueAsNumber
+                if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
+                    qtyToAdd = newQuantityValue - basketProduct.quantity
+                    basketProduct.quantity = newQuantityValue
+                    basket.totalQuantity = basket.totalQuantity + qtyToAdd
+                    // JSON.stringify() method converts a JavaScript value to a JSON string
+                    let lineBasket = JSON.stringify(basket)
+                    localStorage.setItem("basket", lineBasket)
+                    window.location.reload()
                 }
+            }
         })
-   }
+    }
 }
 // Suppression d'un canapé
 function delProduct() {
@@ -175,11 +176,11 @@ function delProduct() {
             alert('Vous avez bien supprimé votre produit du panier !')
             if (basket.totalQuantity == 0) {
                 localStorage.clear()
-                window.location.reload(false)
+                window.location.reload()
             } else {
                 let lineBasket = JSON.stringify(basket)
                 localStorage.setItem("basket", lineBasket)
-                window.location.reload(false)
+                window.location.reload()
             }
         })
     }
@@ -254,11 +255,22 @@ btnOrder.addEventListener('click', function(e) {
     if (basketStr == null) {
         alert("Pour passer commande, veuillez ajouter des produits à votre panier")
         e.preventDefault()
-    } else if (firstName.value === "" || lastName.value === "" || address.value === "" || city.value === "" || email.value === "") {
+    } else if (
+        firstName.value === ""
+        || lastName.value === ""
+        || address.value === ""
+        || city.value === ""
+        || email.value === ""
+    ) {
         alert("Vous devez renseigner vos coordonnées pour passer la commande !")
         e.preventDefault();
-    } else if (nameRegExp.test(inputFirstName.value) ==  false || nameRegExp.test(inputLastName.value) ==  false || adressRegExp.test(inputAddress.value)
-        ==  false || nameRegExp.test(inputCity.value) ==  false || emailRegExp.test(inputEmail.value) ==  false) {
+    } else if (
+        nameRegExp.test(inputFirstName.value) ==  false
+        || nameRegExp.test(inputLastName.value) ==  false
+        || adressRegExp.test(inputAddress.value) ==  false
+        || nameRegExp.test(inputCity.value) ==  false
+        || emailRegExp.test(inputEmail.value) ==  false
+    ) {
         alert("Vérifiez vos coordonnées pour passer la commande !")
         e.preventDefault()
     } else {
