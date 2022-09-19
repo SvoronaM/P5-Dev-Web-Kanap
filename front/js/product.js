@@ -2,7 +2,6 @@
     let string = window.location.href
     let url = new URL(string)
     let idURL = url.searchParams.get("id")
-
 // Appel API avec l'id du produit
     let productUnit = ""
     let requestURL = "http://localhost:3000/api/products/" + idURL
@@ -15,36 +14,29 @@ fetch(requestURL)
 // Ajout un message au cas où le serveur ne répond pas
     .catch(_error => {
         alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.')
-    });
+    })
 // Affichage du produit par page produit
 function showProduct(productData) {
     document.title = productData.name
     let panelIMG = document.querySelector('.item__img')
-
 // Insertion image du canapé
     let createPict = document.createElement('img')
     createPict.setAttribute('src', productData.imageUrl)
     createPict.setAttribute('alt', productData.altTxt)
     panelIMG.appendChild(createPict)
-
 // Insertion du nom du canapé
     let panelH1 = document.querySelector('#title')
     panelH1.textContent = productData.name
-
 // Insertion du prix du canapé
     let panelPrix = document.querySelector('#price')
     panelPrix.textContent = productData.price
-
 // Insertion du choix du canapé
     let panelDescription = document.querySelector('#description')
     panelDescription.textContent = productData.description
-
 // Récupération de #colors
     let panelOption = document.querySelector('#colors')
-
 // Insertion du tableau des couleurs dans une variable
     let colors = productData.colors
-
 // Parcours du tableau de couleurs et insertion de celles-ci dans choix
     for (let i = 0; i < colors.length; i++){
         let colorProduct = colors[i]
@@ -54,14 +46,11 @@ function showProduct(productData) {
         panelOption.appendChild(createOption);
     }
 }
-
 // Ajouter au localstorage
-
 // Récupération de #colors, #quantity et #addToCard
     let choixColor = document.querySelector('#colors')
     let choixQuantity = document.querySelector('#quantity')
     let sendToBasket = document.querySelector('#addToCart')
-
 // Configuration un eventListener quand l'utilisateur clique sur ajouter au panier
 sendToBasket.addEventListener('click', function (event) {
 // Récupération des valeurs de quantité et de couleurs du produit choisi dans des variables
@@ -81,7 +70,6 @@ sendToBasket.addEventListener('click', function (event) {
         } else {
             basket = JSON.parse(basketStr)
         }
-
         // Creation du produit choisi
         let choixProduct = {
             id: productUnit._id,
@@ -90,7 +78,6 @@ sendToBasket.addEventListener('click', function (event) {
             quantity: Number(valueQuantity),
             img: productUnit.imageUrl,
         }
-
         // Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
         boolean = false;
         for (let i = 0 ; i < basket.products.length; i++) {
@@ -103,7 +90,6 @@ sendToBasket.addEventListener('click', function (event) {
                 break
             }
         }
-
         // Ajout du produit choisi dans le panier (SI ils ont pas le même id et même color)
         if (boolean == false) {
             basket.products.push(choixProduct);
