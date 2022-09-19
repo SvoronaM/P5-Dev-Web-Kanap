@@ -162,11 +162,12 @@ function delProduct() {
         // e - Event. Event.target - C'est une référence à l'objet qui a envoyé l'événement. La méthode closest() traverse l'élément courant
         delItemUnit.addEventListener('click', function(e) {
             let articleDelItemID = e.target.closest('article').getAttribute("data-id")
+            let articleDelItemColor = event.target.closest('article').getAttribute("data-color")
             let basket = JSON.parse(basketStr)
             //  find() renvoie la valeur du premier élément trouvé dans le tableau qui respecte la condition donnée
-            productToDel = basket.products.find(el => el.id == articleDelItemID)
+            productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
             // filter() crée et retourne un nouveau tableau contenant tous les éléments du tableau d'origine
-            result = basket.products.filter(el => el.id !== articleDelItemID)
+            result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
             basket.products = result
             newQuantity = basket.totalQuantity - productToDel.quantity
             basket.totalQuantity = newQuantity
