@@ -106,8 +106,8 @@ async function getProduct(id) {
         .then(response => response.json())
         .catch(error => alert("Erreur : " + error))
 }
-// Si le panier est vide, afficher "panier vide"
-// Si non parser le panier, et utiliser la function showproductbasket
+// SI le panier est vide, afficher "panier vide"
+// SINON parser le panier, et utiliser la function showproductbasket
 async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')
@@ -131,6 +131,7 @@ async function showCart() {
     }
 }
 showCart()
+
 // Changement quantité et prix
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
@@ -141,20 +142,23 @@ function changeQuantity() {
                 basketProduct = basket.products[l]
                 let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
                 let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
+                // valueAsNumber fournit la valeur de input[type=number]en tant que type Number, au lieu de la représentation sous forme de chaîne traditionnelle
                 newQuantityValue = event.target.valueAsNumber
-                if (basketProduct.id == articleQuantityItemID && basketProduct.color == articleQuantityItemColor) {
+                if (basketProduct.id == articleQuantityItemID && basketProduct.color  == articleQuantityItemColor) {
                     qtyToAdd = newQuantityValue - basketProduct.quantity
                     basketProduct.quantity = newQuantityValue
                     basket.totalQuantity = basket.totalQuantity + qtyToAdd
                     // JSON.stringify() method converts a JavaScript value to a JSON string
                     let lineBasket = JSON.stringify(basket)
                     localStorage.setItem("basket", lineBasket)
-                    window.location.reload()
+                    // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
+                    window.location.reload(false)
                 }
             }
         })
     }
 }
+
 // Suppression d'un canapé
 function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem')
@@ -176,11 +180,13 @@ function delProduct() {
             alert('Vous avez bien supprimé votre produit du panier !')
             if (basket.totalQuantity == 0) {
                 localStorage.clear()
-                window.location.reload()
+                // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
+                window.location.reload(false)
             } else {
                 let lineBasket = JSON.stringify(basket)
                 localStorage.setItem("basket", lineBasket)
-                window.location.reload()
+                // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
+                window.location.reload(false)
             }
         })
     }
