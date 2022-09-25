@@ -70,7 +70,7 @@ function showProductBasketInpQuant(produit, createDivContSetQuantity) {
     createInputQuantity.className = 'itemQuantity'
     createInputQuantity.setAttribute('type', 'number')
     createInputQuantity.setAttribute('name', 'itemQuantity')
-    createInputQuantity.setAttribute('min', '0')
+    createInputQuantity.setAttribute('min', '1')
     createInputQuantity.setAttribute('max', '100')
     createInputQuantity.setAttribute('value', produit.quantity)
     createDivContSetQuantity.appendChild(createInputQuantity)

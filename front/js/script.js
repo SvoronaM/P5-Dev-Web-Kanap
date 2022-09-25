@@ -1,8 +1,8 @@
 //fetch récupére les données depuis de l'API
 fetch('http://localhost:3000/api/products')
-//la réponse (en staged) transformation en json
+//La réponse (en staged) transformation en json
     .then(response => response.json())
-//afficher (en online) les données dans la fonction showProducts
+//Afficher (en online) les données dans la fonction showProducts
     .then(data => {
         showProducts(data);
     })
