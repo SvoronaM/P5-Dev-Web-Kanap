@@ -107,7 +107,6 @@ async function getProduct(id) {
         .catch(error => alert("Erreur : " + error))
 }
 // SI le panier est vide, afficher "panier vide"
-// SINON parser le panier, et utiliser la function showproductbasket
 async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')
@@ -131,8 +130,7 @@ async function showCart() {
     }
 }
 showCart()
-
-// Changement quantité et prix
+// Changement quantité
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
     for (let k = 0; k < quantityItem.length; k++) {
@@ -158,7 +156,6 @@ function changeQuantity() {
         })
     }
 }
-
 // Suppression d'un canapé
 function delProduct() {
     let delItem = document.querySelectorAll('.deleteItem')
