@@ -1,10 +1,6 @@
-/// Récupération du contenu du panier à partir du localstorage
-let basketStr = localStorage.getItem('basket')
-let basket = JSON.parse(basketStr)
-
 // Récupération de l'élement "cart__items"
 let cartPanel = document.querySelector('#cart__items');
-
+// Insertion des produits
 function showProductBasketCreatArticlePict(produit, createArticle) {
     // insertion des articles
     createArticle.className = 'cart__item'
@@ -101,6 +97,9 @@ function showProductBasket(produit) {
     showProductBasketInpQuant(produit, createDivContSetQuantity)
     showProductBasketDelp(produit, createDivContSet)
 }
+/// Récupération du contenu du panier à partir du localstorage
+let basketStr = localStorage.getItem('basket')
+let basket = JSON.parse(basketStr)
 // Récupération de produit dans l'API via son id
 async function getProduct(id) {
     return fetch("http://localhost:3000/api/products/" + id)
@@ -297,6 +296,7 @@ btnOrder.addEventListener('click', function(e) {
             },
             products : productID
         }
+        // fetch, un moyen facile et logique de récupérer des ressources à travers le réseau de manière asynchrone
         fetch("http://localhost:3000/api/products/order", {
             // .post() permet d'envoyer des données
             method: 'POST',
