@@ -47,7 +47,7 @@ function showProductBasketPr(produit, createDivDes) {
             createpPrice.textContent = (`Prix :   ${productUnit.price}   € / canapé`)
             createDivDes.appendChild(createpPrice)
         })
-        .catch(error => alert("Erreur : " + error))
+        .catch(error => alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.'))
 }
 // insertion div content settings
 function showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity) {
@@ -104,7 +104,7 @@ let basket = JSON.parse(basketStr)
 async function getProduct(id) {
     return fetch("http://localhost:3000/api/products/" + id)
         .then(response => response.json())
-        .catch(error => alert("Erreur : " + error))
+        .catch(error => alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.'))
 }
 // SI le panier est vide, afficher "panier vide"
 // Affichage quantity et prix
