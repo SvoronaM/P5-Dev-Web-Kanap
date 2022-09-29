@@ -97,7 +97,7 @@ function showProductBasket(produit) {
     showProductBasketInpQuant(produit, createDivContSetQuantity)
     showProductBasketDelp(produit, createDivContSet)
 }
-/// Récupération du contenu du panier à partir du localstorage
+// Récupération du contenu du panier à partir du localstorage
 let basketStr = localStorage.getItem('basket')
 let basket = JSON.parse(basketStr)
 // Récupération de produit dans l'API via son id
