@@ -1,6 +1,6 @@
 // Récupération de l'id dans l'URL
-    let string = window.location.href
-    let url = new URL(string)
+    let str= window.location.href
+    let url = new URL(str)
     let idURL = url.searchParams.get("id")
 // Appel API avec l'id du produit
     let productUnit = ""
