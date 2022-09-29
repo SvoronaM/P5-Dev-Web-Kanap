@@ -1,12 +1,12 @@
 // Récupération de l'élement "cart__items"
-let cartPanel = document.querySelector('#cart__items');
+let cartItms = document.querySelector('#cart__items');
 // Insertion des produits
 function showProductBasketCreatArticlePict(produit, createArticle) {
     // insertion des articles
     createArticle.className = 'cart__item'
     createArticle.setAttribute('data-id', produit.id)
     createArticle.setAttribute('data-color', produit.color)
-    cartPanel.appendChild(createArticle)
+    cartItms.appendChild(createArticle)
     // insertion div de l'img
     let createDivIMG = document.createElement('div')
     createDivIMG.className = 'cart__item__img'
@@ -112,7 +112,7 @@ async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')
         createpEmpty.textContent = 'Votre panier est vide'
-        cartPanel.appendChild(createpEmpty)
+        cartItms.appendChild(createpEmpty)
     } else {
         let totalPrice = 0
         for (let i = 0 ; i < basket.products.length; i++) {
