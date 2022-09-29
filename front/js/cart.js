@@ -108,6 +108,7 @@ async function getProduct(id) {
         .catch(error => alert("Erreur : " + error))
 }
 // SI le panier est vide, afficher "panier vide"
+// Affichage quantity et prix
 async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')

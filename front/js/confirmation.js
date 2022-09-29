@@ -5,4 +5,4 @@ let idOrderURL = url.searchParams.get("orderId");
 
 //Affichage du numéro de commande
 let orderIdNumberElt = document.querySelector('#orderId');
-orderIdNumberElt.innerHTML = idOrderURL;
+orderIdNumberElt.innerText = idOrderURL;
