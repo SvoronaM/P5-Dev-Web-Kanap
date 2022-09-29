@@ -44,6 +44,7 @@ function showProductBasketPr(produit, createDivDes) {
     fetch("http://localhost:3000/api/products/" + produit.id)
         .then(response => response.json())
         .then(async function (resultatAPI) {
+            // await permet d'attendre la résolution d'une promesse
             productUnit = await resultatAPI
             // insertion P price
             let createpPrice = document.createElement('p')
@@ -117,6 +118,7 @@ async function showCart() {
         for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i]
             showProductBasket(basketProduct)
+            // await permet d'attendre la résolution d'une promesse (Promise)
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
             totalPrice += productsPrice.price * productQuantity
@@ -149,6 +151,9 @@ function changeQuantity() {
                     // JSON.stringify() method converts a JavaScript value to a JSON string
                     let lineBasket = JSON.stringify(basket)
                     localStorage.setItem("basket", lineBasket)
+                    if (newQuantityValue <= 0 || newQuantityValue > 100 ){
+                        alert("Veuillez choisir une quantité entre 1 et 100 ");
+                    }
                     // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
                     window.location.reload(false)
                 }

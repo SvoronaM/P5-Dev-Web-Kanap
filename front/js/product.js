@@ -8,6 +8,8 @@
 fetch(requestURL)
     .then(response => response.json())
     .then(async function (resultatAPI) {
+        // await permet d'attendre la résolution d'une promesse (Promise) Lorsque la promesse est résolue (tenue ou rompue),
+        // la valeur est renvoyée et l'exécution de la fonction asynchrone reprend.
         productUnit = await resultatAPI
         showProduct(productUnit)
     })
@@ -79,7 +81,7 @@ sendToBasket.addEventListener('click', function (event) {
             img: productUnit.imageUrl,
         }
         // Ajout de la quantité du produit choisi à la quantité des produits dans le panier (SI ils ont le même id et même color)
-        boolean = false;
+        boolean = false
         for (let i = 0 ; i < basket.products.length; i++) {
             basketProduct = basket.products[i]
             if (basketProduct.id == choixProduct.id && basketProduct.color == choixProduct.color) {
