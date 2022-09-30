@@ -122,16 +122,24 @@ async function showCart() {
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
             totalPrice += productsPrice.price * productQuantity
-            let totalPriceElt = document.querySelector('#totalPrice')
-            totalPriceElt.textContent = totalPrice
         }
+        let totalPriceElt = document.querySelector('#totalPrice')
+        totalPriceElt.textContent = totalPrice
         let totalQuantity = document.querySelector('#totalQuantity')
         totalQuantity.textContent = basket.totalQuantity
-        changeQuantity()
-        delProduct()
+        // changeQuantity()
+        // delProduct()
     }
 }
 showCart()
+function clearPage() {
+    let cartPr = document.getElementById("totalPrice")
+    let cartQuan = document.getElementById("totalQuantity")
+    let cartItems = document.getElementById("cart__items")
+    cartPr.innerText = 0
+    cartQuan.innerText = 0
+    cartItems.replaceChildren()
+}
 // Changement quantité
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
@@ -152,10 +160,12 @@ function changeQuantity() {
                     let lineBasket = JSON.stringify(basket)
                     localStorage.setItem("basket", lineBasket)
                     if (newQuantityValue <= 0 || newQuantityValue > 100 ){
-                        alert("Veuillez choisir une quantité entre 1 et 100 ");
+                        alert("Veuillez choisir une quantité entre 1 et 100 ")
                     }
+                    clearPage()
+                    showCart()
                     // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
-                    window.location.reload(false)
+                    //window.location.reload(false)
                 }
             }
         })
@@ -310,6 +320,7 @@ btnOrder.addEventListener('click', function(e) {
             .then(async function (resultOrder) {
                 order = await resultOrder
                 document.location.href = "confirmation.html?orderId=" + order.orderId
+                // La méthode clear() de l'interface localStorage, lorsqu'elle est invoquée, vide toutes les clés stockées.
                 localStorage.clear()
             })
     }
