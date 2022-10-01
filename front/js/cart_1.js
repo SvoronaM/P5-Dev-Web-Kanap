@@ -1,12 +1,12 @@
 // Crée une fonction pour enregister cart dans le localStorage en JSON
 function saveCart(cart) {
-   localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 
 // Crée une fonction pour récupérer la cart depuis le localStorage
 function getCart() {
-    let cart = localStorage.getItem('cart');
+    let cart = localStorage.getItem("cart");
     // Si le localStorage est vide, retourne un tableau vide
     if (cart == null) {
         return [];
