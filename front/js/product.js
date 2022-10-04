@@ -1,10 +1,10 @@
 // Récupération de l'id dans l'URL
-    let str= window.location.href
-    let url = new URL(str)
-    let idURL = url.searchParams.get("id")
+let sear= window.location.href
+let url = new URL(sear)
+let idURL = url.searchParams.get("id")
 // Appel API avec l'id du produit
-    let productUnit = ""
-    let requestURL = "http://localhost:3000/api/products/" + idURL
+let productUnit = ""
+let requestURL = "http://localhost:3000/api/products/" + idURL
 fetch(requestURL)
     .then(response => response.json())
     .then(async function (resultatAPI) {
@@ -13,7 +13,7 @@ fetch(requestURL)
         productUnit = await resultatAPI
         showProduct(productUnit)
     })
-// Ajout un message au cas où le serveur ne répond pas
+    // Ajout un message au cas où le serveur ne répond pas
     .catch(_error => {
         alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.')
     })
@@ -50,9 +50,9 @@ function showProduct(productData) {
 }
 // Ajouter au localstorage
 // Récupération de #colors, #quantity et #addToCard
-    let choixColor = document.querySelector('#colors')
-    let choixQuantity = document.querySelector('#quantity')
-    let sendToBasket = document.querySelector('#addToCart')
+let choixColor = document.querySelector('#colors')
+let choixQuantity = document.querySelector('#quantity')
+let sendToBasket = document.querySelector('#addToCart')
 // Configuration un eventListener quand l'utilisateur clique sur ajouter au panier
 sendToBasket.addEventListener('click', function (event) {
 // Récupération des valeurs de quantité et de couleurs du produit choisi dans des variables

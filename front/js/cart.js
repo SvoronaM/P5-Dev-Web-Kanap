@@ -108,38 +108,30 @@ async function getProduct(id) {
 }
 // SI le panier est vide, afficher "panier vide"
 // Affichage quantity et prix
+// Crée une fonction pour modifié le prix total
 async function showCart() {
     if (basketStr == null) {
         let createpEmpty = document.createElement('p')
         createpEmpty.textContent = 'Votre panier est vide'
-        cartItms.appendChild(createpEmpty)
+        cartPanel.appendChild(createpEmpty)
     } else {
         let totalPrice = 0
         for (let i = 0 ; i < basket.products.length; i++) {
-            basketProduct = basket.products[i]
+            basketProduct = basket.products[i];
             showProductBasket(basketProduct)
-            // await permet d'attendre la résolution d'une promesse (Promise)
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
             totalPrice += productsPrice.price * productQuantity
+            let totalPriceElt = document.querySelector('#totalPrice')
+            totalPriceElt.textContent = totalPrice
         }
-        let totalPriceElt = document.querySelector('#totalPrice')
-        totalPriceElt.textContent = totalPrice
         let totalQuantity = document.querySelector('#totalQuantity')
         totalQuantity.textContent = basket.totalQuantity
-        // changeQuantity()
-        // delProduct()
+        changeQuantity()
+        delProduct()
     }
 }
 showCart()
-function clearPage() {
-    let cartPr = document.getElementById("totalPrice")
-    let cartQuan = document.getElementById("totalQuantity")
-    let cartItems = document.getElementById("cart__items")
-    cartPr.innerText = 0
-    cartQuan.innerText = 0
-    cartItems.replaceChildren()
-}
 // Changement quantité
 function changeQuantity() {
     let quantityItem = document.querySelectorAll('.itemQuantity')
@@ -162,10 +154,9 @@ function changeQuantity() {
                     if (newQuantityValue <= 0 || newQuantityValue > 100 ){
                         alert("Veuillez choisir une quantité entre 1 et 100 ")
                     }
-                    clearPage()
                     showCart()
                     // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
-                    //window.location.reload(false)
+                    window.location.reload(false)
                 }
             }
         })
@@ -206,8 +197,9 @@ function delProduct() {
 // Validation formulaire
 let form = document.querySelector(".cart__order__form")
 // RegExp - correspondances d'un texte avec un motif donné
-let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$")
+
 let nameRegExp = new RegExp("^[A-zÀ-ú \-]+$")
+let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$")
 let emailRegExp = new RegExp("^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$")
 // Prénom
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
@@ -216,7 +208,7 @@ form.firstName.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         firstNameErrorMsg.innerText = ''
     } else {
-        firstNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre prénom.'
+        firstNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et ' "
     }
 })
 // Nom
@@ -226,7 +218,7 @@ form.lastName.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         lastNameErrorMsg.innerText = ''
     } else {
-        lastNameErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre nom.'
+        lastNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et ' "
     }
 })
 // Adresse
@@ -236,7 +228,7 @@ form.address.addEventListener('change', function(e) {
     if (adressRegExp.test(value)){
         adressErrorMsg.innerText = ''
     } else {
-        adressErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse postale.'
+        adressErrorMsg.innerText = "Merci de vérifier l'adresse, alphanumérique et sans caractères spéciaux"
     }
 })
 // Ville
@@ -246,7 +238,7 @@ form.city.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         cityErrorMsg.innerText = ''
     } else {
-        cityErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre ville.'
+        cityErrorMsg.innerText = "Champ invalide, veuillez vérifier votre ville."
     }
 })
 // Email
