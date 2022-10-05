@@ -122,9 +122,9 @@ async function showCart() {
             let productsPrice = await getProduct(basketProduct.id)
             let productQuantity = basketProduct.quantity
             totalPrice += productsPrice.price * productQuantity
-            let totalPriceElt = document.querySelector('#totalPrice')
-            totalPriceElt.textContent = totalPrice
         }
+        let totalPriceElt = document.querySelector('#totalPrice')
+        totalPriceElt.textContent = totalPrice
         let totalQuantity = document.querySelector('#totalQuantity')
         totalQuantity.textContent = basket.totalQuantity
         changeQuantity()
@@ -198,9 +198,10 @@ function delProduct() {
 let form = document.querySelector(".cart__order__form")
 // RegExp - correspondances d'un texte avec un motif donné
 
-let nameRegExp = new RegExp("^[A-zÀ-ú \-]+$")
-let adressRegExp = new RegExp("^[A-zÀ-ú0-9 ,.'\-]+$")
-let emailRegExp = new RegExp("^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$")
+let nameRegExp = new RegExp(/^[a-zéèôöîïûùü' -]{2,50}$/g)
+let adressRegExp = new RegExp(/^[A-zÀ-ú0-9 ,.'\-]+$/)
+let cityRegExp = new RegExp(/^[0-9]{5} [A-zéèôöîïûùü' -]{2,50}$/gi)
+let emailRegExp = new RegExp(/^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/)
 // Prénom
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 form.firstName.addEventListener('change', function(e) {
@@ -235,7 +236,7 @@ form.address.addEventListener('change', function(e) {
 let cityErrorMsg = document.querySelector('#cityErrorMsg')
 form.city.addEventListener('change', function(e) {
     let value = e.target.value
-    if (nameRegExp.test(value)){
+    if (cityRegExp.test(value)){
         cityErrorMsg.innerText = ''
     } else {
         cityErrorMsg.innerText = "Champ invalide, veuillez vérifier votre ville."

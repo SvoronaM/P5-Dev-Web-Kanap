@@ -21,19 +21,19 @@ fetch(requestURL)
 function showProduct(productData) {
     document.title = productData.name
     let panelIMG = document.querySelector('.item__img')
-// Insertion image du canapé
     let createPict = document.createElement('img')
+    let panelH1 = document.querySelector('#title')
+    let panelPrix = document.querySelector('#price')
+    let panelDescription = document.querySelector('#description')
+// Insertion image du canapé
     createPict.setAttribute('src', productData.imageUrl)
     createPict.setAttribute('alt', productData.altTxt)
     panelIMG.appendChild(createPict)
 // Insertion du nom du canapé
-    let panelH1 = document.querySelector('#title')
     panelH1.textContent = productData.name
 // Insertion du prix du canapé
-    let panelPrix = document.querySelector('#price')
     panelPrix.textContent = productData.price
 // Insertion du choix du canapé
-    let panelDescription = document.querySelector('#description')
     panelDescription.textContent = productData.description
 // Récupération de #colors
     let panelOption = document.querySelector('#colors')
