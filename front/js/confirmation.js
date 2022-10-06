@@ -1,10 +1,3 @@
-//Récupération du numéro de commande dans l'URL
-// window.location.href renvoie le href (URL) de la page en cours
-let str = window.location.href
-let url = new URL(str)
-// url.searchParams.get renvoie la première valeur associée au paramètre de recherche donné(id).
-let idOrderURL = url.searchParams.get("orderId")
-
-//Affichage du numéro de commande, retour id avec querySelector
-let orderIdNumberElt = document.querySelector('#orderId')
-orderIdNumberElt.innerText = idOrderURL
+// Extrait order Id depuis l'URL et l'ajoute dans le texte de l'élément HTML orderId
+let params = new URL(document.location).searchParams;
+document.getElementById("orderId").textContent = params.get("id");
