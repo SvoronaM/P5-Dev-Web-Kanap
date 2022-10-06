@@ -58,13 +58,36 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         itemPresentation.appendChild(productErrorMessage);
     });
 
-
-
+// Crée une fonction pour récupérer la cart depuis le localStorage
+function getCart() {
+    let cart = localStorage.getItem("cart");
+    // Si le localStorage est vide, retourne un tableau vide
+    if (cart == null) {
+        return [];
+        // Si il n'est pas vide, retourne cart dans son format original
+    } else {
+        return JSON.parse(cart);
+    }
+}
+// Crée une fonction pour ajouter les produits a cart
+function addToCart(product) {
+    // Récupération de la carte
+    let cart = getCart();
+    // Vérifie si il y a un produit avec l'id et la couleur identique dans la cart
+    let productFound = cart.find((p) => p.id === product.id && p.color === product.color);
+    // Si oui, modifie la quantité en ajoutens la nouvelle
+    if (productFound != undefined) {
+        productFound.quantity += product.quantity;
+        // Si non, ajoute le nouveau produit a cart
+    } else {
+        cart.push(product);
+    }
+    // Enregistre la carte modifié avec la fonction saveCart
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
 // Ajout des produits a Cart
 // Récupération du Bouton dans une constante
 const addToCartBtn = document.getElementById("addToCart");
-
-
 // Récupération des quantité et des couleurs dans des variables
 let quantity = document.getElementById("quantity");
 let color = document.getElementById("colors");
@@ -86,8 +109,8 @@ addToCartBtn.addEventListener("click", () => {
     // Si la couleur et la quantité ont été choisi, ajoute a Cart sinon envoi un message erreur
     if (color.value !== "" && quantity.value > 0 && quantity.value <= 100) {
         addToCart(product);
-        alert("Votre choix a bien été effectué et votre article a été ajouté à votre panier.");
+        alert(`Votre commande de ${quantityPicked} ${productName} ${colorPicked} est bien ajoutée au panier !`);
     } else {
-        alert("Veuillez sélectionner une couleur et indiquer la quantité souhaitée. Attention, la quantité maximale est fixée à 100 articles.");
+        alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
     }
 });

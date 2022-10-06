@@ -1,215 +1,277 @@
-// Récupération de l'élement "cart__items"
-let cartItms = document.querySelector('#cart__items');
-// Insertion des produits
-function showProductBasketCreatArticlePict(produit, createArticle) {
-    // insertion des articles
-    createArticle.className = 'cart__item'
-    createArticle.setAttribute('data-id', produit.id)
-    createArticle.setAttribute('data-color', produit.color)
-    cartItms.appendChild(createArticle)
-    // insertion div de l'img
-    let createDivIMG = document.createElement('div')
-    createDivIMG.className = 'cart__item__img'
-    createArticle.appendChild(createDivIMG)
-    // insertion des images
-    let createPict = document.createElement('img')
-    createPict.setAttribute('src', produit.img)
-    createPict.setAttribute('alt', "Photographie d'un canapé")
-    createDivIMG.appendChild(createPict)
+// Crée une fonction pour enregister cart dans le localStorage en JSON
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
-// insertion div content description
-function showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes) {
-    createDivContDes.className = 'cart__item__content'
-    createArticle.appendChild(createDivContDes)
-    // insertion div description
-    createDivDes.className = 'cart__item__content__description'
-    createDivContDes.appendChild(createDivDes)
-    // insertion H2
-    let createH2 = document.createElement('h2')
-    createH2.textContent = produit.name
-    createDivDes.appendChild(createH2)
-    // insertion P color
-    let createpColor = document.createElement('p')
-    createpColor.textContent = "Couleur : " + produit.color
-    createDivDes.appendChild(createpColor)
-}
-// recupération du prix en utilisant l'id du produit
-function showProductBasketPr(produit, createDivDes) {
-    let productUnit = ""
-    // L'API Fetch fournit une interface pour la récupération de ressources
-    fetch("http://localhost:3000/api/products/" + produit.id)
-        .then(response => response.json())
-        .then(async function (resultatAPI) {
-            // await permet d'attendre la résolution d'une promesse
-            productUnit = await resultatAPI
-            // insertion P price
-            let createpPrice = document.createElement('p')
-            createpPrice.textContent = (`Prix :   ${productUnit.price}   € / canapé`)
-            createDivDes.appendChild(createpPrice)
-        })
-        .catch(error => alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.'))
-}
-// insertion div content settings
-function showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity) {
-    createDivContSet.className = 'cart__item__content__settings'
-    createDivContDes.appendChild(createDivContSet)
-    // insertion div settings quantity
-    createDivContSetQuantity.className = 'cart__item__content__settings__quantity'
-    createDivContSet.appendChild(createDivContSetQuantity)
-    // insertion P quantity
-    let createpQuantity = document.createElement('p')
-    createpQuantity.textContent = "Qté :"
-    createDivContSetQuantity.appendChild(createpQuantity)
-}
-// insertion input quantity
-function showProductBasketInpQuant(produit, createDivContSetQuantity) {
-    let createInputQuantity = document.createElement('input')
-    createInputQuantity.className = 'itemQuantity'
-    createInputQuantity.setAttribute('type', 'number')
-    createInputQuantity.setAttribute('name', 'itemQuantity')
-    createInputQuantity.setAttribute('min', '1')
-    createInputQuantity.setAttribute('max', '100')
-    createInputQuantity.setAttribute('value', produit.quantity)
-    createDivContSetQuantity.appendChild(createInputQuantity)
-}
-// insertion div settings delete
-function showProductBasketDelp(produit, createDivContSet) {
-    let createDivContSetDel = document.createElement('div')
-    createDivContSetDel.className = 'cart__item__content__settings__delete'
-    createDivContSet.appendChild(createDivContSetDel)
-    // insertion P delete
-    let createpDelete = document.createElement('p')
-    createpDelete.className = 'deleteItem'
-    createpDelete.textContent = "Supprimer"
-    createDivContSetDel.appendChild(createpDelete)
-}
-// Affichage des produits dans la page panier
-function showProductBasket(produit) {
-    let createArticle = document.createElement('article')
-    let createDivDes = document.createElement('div')
-    let createDivContDes = document.createElement('div')
-    let createDivContSet = document.createElement('div')
-    let createDivContSetQuantity = document.createElement('div')
-    showProductBasketCreatArticlePict(produit, createArticle)
-    showProductBasketCreatContDescr(produit, createArticle, createDivDes, createDivContDes)
-    showProductBasketPr(produit, createDivDes)
-    showProductBasketQuant(produit, createDivContDes, createDivContSet, createDivContSetQuantity)
-    showProductBasketInpQuant(produit, createDivContSetQuantity)
-    showProductBasketDelp(produit, createDivContSet)
-}
-// Récupération du contenu du panier à partir du localstorage
-let basketStr = localStorage.getItem('basket')
-let basket = JSON.parse(basketStr)
-// Récupération de produit dans l'API via son id
-async function getProduct(id) {
-    return fetch("http://localhost:3000/api/products/" + id)
-        .then(response => response.json())
-        .catch(error => alert('Oops ! Le serveur ne répond pas, suivez les instructions dans le READ.me.'))
-}
-// SI le panier est vide, afficher "panier vide"
-// Affichage quantity et prix
-// Crée une fonction pour modifié le prix total
-async function showCart() {
-    if (basketStr == null) {
-        let createpEmpty = document.createElement('p')
-        createpEmpty.textContent = 'Votre panier est vide'
-        cartPanel.appendChild(createpEmpty)
+
+// Crée une fonction pour récupérer la cart depuis le localStorage
+function getCart() {
+    let cart = localStorage.getItem("cart");
+    // Si le localStorage est vide, retourne un tableau vide
+    if (cart == null) {
+        return [];
+        // Si il n'est pas vide, retourne cart dans son format original
     } else {
-        let totalPrice = 0
-        for (let i = 0 ; i < basket.products.length; i++) {
-            basketProduct = basket.products[i];
-            showProductBasket(basketProduct)
-            let productsPrice = await getProduct(basketProduct.id)
-            let productQuantity = basketProduct.quantity
-            totalPrice += productsPrice.price * productQuantity
+        return JSON.parse(cart);
+    }
+}
+// Crée une fonction pour ajouter les produits a cart
+/*function addToCart(product) {
+    // Récupération de la carte
+    let cart = getCart();
+    // Vérifie si il y a un produit avec l'id et la couleur identique dans la cart
+    let productFound = cart.find((p) => p.id === product.id && p.color === product.color);
+    // Si oui, modifie la quantité en ajoutens la nouvelle
+    if (productFound != undefined) {
+        productFound.quantity += product.quantity;
+        // Si non, ajoute le nouveau produit a cart
+    } else {
+        cart.push(product);
+    }
+    // Enregistre la carte modifié avec la fonction saveCart
+    saveCart(cart);
+}*/
+// Crée une fonction pour supprimer des produits de la cart
+function removeFromCart(product) {
+    let cart = getCart();
+    // Filtrer la carte pour garder uniquement les produits avec une id différentes ou les produits avec une différentes couleur et la même id
+    cart = cart.filter((p) => p.id != product.id || p.color != product.color);
+    saveCart(cart);
+}
+
+// Crée une fonction pour récuperer le prix total des produits dans la cart
+function getNumberOfProducts() {
+    let cart = getCart();
+    // Définie numberOfProduct = 0
+    let numberOfProduct = 0;
+    // Parcoure chaque produit
+    for (let product of cart) {
+        // Pour chaque produit dans la cart, ajoute la quantité du produit a numberOfProduct
+        numberOfProduct += product.quantity;
+    }
+    // Retourne le nombre total de produit
+    return numberOfProduct;
+}
+
+// Crée une fonction pour avoir le prix total de la cart
+function getTotalPrice(product, quantity) {
+    // Pour chaque produit dans la carte, ajoute le prix total a totalCartPrice (product.price * quantité)
+    totalCartPrice += product.price * quantity;
+    // Retourne le prix total de la carte
+    return totalCartPrice;
+}
+
+// Crée une fonction pour modifié la quantité d'un produit
+function modifyQuantity(product, quantity) {
+
+    let cart = getCart();
+
+    // vérifie si un produit avec le meme id et la même couleur sont déja dans la carte
+    let productFound = cart.find((p) => p.id == product.id && p.color == product.color);
+
+    // Si oui, ajuste la nouvelle quantité
+    if (productFound != undefined) {
+        productFound.quantity = quantity;
+
+        // si la nouvelle quantité <= 0, supprime le produit de la carte et recharge la page
+        if(quantity <= 0){
+            document.location.reload();
+            removeFromCart(productFound);
+            alert("L'article a été retiré de votre panier");
+
+            // Si la nouvelle quantité > 100, envoi un message d'alert et recharge la page
+        }else if(quantity > 100){
+            document.location.reload();
+            alert("La quantité est limitée à 100 pièces");
+        }else{
+
+            saveCart(cart);
         }
-        let totalPriceElt = document.querySelector('#totalPrice')
-        totalPriceElt.textContent = totalPrice
-        let totalQuantity = document.querySelector('#totalQuantity')
-        totalQuantity.textContent = basket.totalQuantity
-        changeQuantity()
-        delProduct()
     }
 }
-showCart()
-// Changement quantité
-function changeQuantity() {
-    let quantityItem = document.querySelectorAll('.itemQuantity')
-    for (let k = 0; k < quantityItem.length; k++) {
-        quantityItemUnit = quantityItem[k]
-        quantityItemUnit.addEventListener('change', function(event) {
-            for (let l = 0 ; l < basket.products.length; l++) {
-                basketProduct = basket.products[l]
-                let articleQuantityItemID = event.target.closest('article').getAttribute("data-id")
-                let articleQuantityItemColor = event.target.closest('article').getAttribute("data-color")
-                // valueAsNumber fournit la valeur de input[type=number]en tant que type Number, au lieu de la représentation sous forme de chaîne traditionnelle
-                newQuantityValue = event.target.valueAsNumber
-                if (basketProduct.id == articleQuantityItemID && basketProduct.color  == articleQuantityItemColor) {
-                    qtyToAdd = newQuantityValue - basketProduct.quantity
-                    basketProduct.quantity = newQuantityValue
-                    basket.totalQuantity = basket.totalQuantity + qtyToAdd
-                    // JSON.stringify() method converts a JavaScript value to a JSON string
-                    let lineBasket = JSON.stringify(basket)
-                    localStorage.setItem("basket", lineBasket)
-                    if (newQuantityValue <= 0 || newQuantityValue > 100 ){
-                        alert("Veuillez choisir une quantité entre 1 et 100 ")
-                    }
-                    showCart()
-                    // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
-                    window.location.reload(false)
-                }
-            }
-        })
+// Crée une fonction pour modifié le prix total
+function modifyTotalPrice(product, oldQuantity, newQuantity) {
+
+    // Si la nouvelle quantité est supérieur a l'ancienne, ajoute et retourne le prix total
+    if (newQuantity > oldQuantity) {
+        totalCartPrice += product.price * (newQuantity - oldQuantity);
+        return totalCartPrice;
+        // Si la nouvelle quantité est inférieur a l'ancienne, enleve et retourne le prix total
+    } else if (newQuantity < oldQuantity) {
+        totalCartPrice -= product.price * (oldQuantity - newQuantity);
+        return totalCartPrice;
     }
 }
-// Suppression d'un canapé
-function delProduct() {
-    let delItem = document.querySelectorAll('.deleteItem')
-    for (let j = 0; j < delItem.length; j++) {
-        delItemUnit = delItem[j]
-        // e - Event. Event.target - C'est une référence à l'objet qui a envoyé l'événement. La méthode closest() traverse l'élément courant
-        delItemUnit.addEventListener('click', function(e) {
-            let articleDelItemID = e.target.closest('article').getAttribute("data-id")
-            let articleDelItemColor = event.target.closest('article').getAttribute("data-color")
-            let basket = JSON.parse(basketStr)
-            //  find() renvoie la valeur du premier élément trouvé dans le tableau qui respecte la condition donnée
-            productToDel = basket.products.find(el => el.id == articleDelItemID && el.color == articleDelItemColor)
-            // filter() crée et retourne un nouveau tableau contenant tous les éléments du tableau d'origine
-            result = basket.products.filter(el => el.id !== articleDelItemID || el.color !== articleDelItemColor)
-            basket.products = result
-            newQuantity = basket.totalQuantity - productToDel.quantity
-            basket.totalQuantity = newQuantity
-            priceToDel = productToDel.quantity * productToDel.price
-            alert('Vous avez bien supprimé votre produit du panier !')
-            if (basket.totalQuantity == 0) {
-                localStorage.clear()
-                // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
-                window.location.reload(false)
-            } else {
-                let lineBasket = JSON.stringify(basket)
-                localStorage.setItem("basket", lineBasket)
-                // False recharge la page en utilisant la version de la page mise en cache par le navigateur.
-                window.location.reload(false)
-            }
+// récupération de la cart avec la fonction getCart
+let cart = getCart();
+
+// Récupération des éléments dans une constante
+const cartList = document.getElementById("cart__items");
+const cartHeading = document.querySelector("h1");
+const totalDisplay = document.querySelector(".cart__price p");
+const orderForm = document.querySelector(".cart__order");
+
+
+// Récupération des éléments qui afficheront le prix total et la quantité de produit dans la cart
+let totalProductsQuantity = document.getElementById("totalQuantity");
+let totalPrice = document.getElementById("totalPrice");
+// Initialisation de totalCartPrice qui sera mis à jour ultérieurement avec le résultat renvoyé par la fonction getTotalPrice
+let totalCartPrice = 0;
+
+
+for (let product of cart) {
+    // Pour chaque produit, récupération de l'identifiant, de la couleur, de la quantité et du nom
+    let productId = product.id;
+    let productColor = product.color;
+    let productQuantity = product.quantity;
+    let productName = product.name;
+    fetch(`http://localhost:3000/api/products/${productId}`)
+
+        .then((response) => response.json())
+        // Définir la réponse de l'API en tant que productDetails et définir l'action à exécuter pour chaque produit du panier
+        .then((productDetails) => {
+
+            // Insertion de l'élément article, définition des attributs, ajout de la classe cart__item et définition en tant qu'enfant de l'élément cartList
+            let productArticle = document.createElement("article");
+            productArticle.classList.add("cart__item");
+            productArticle.setAttribute("data-id", productId);
+            productArticle.setAttribute("data-color", productColor);
+            cartList.appendChild(productArticle);
+
+            // Insertion de l'élément productImgContainer
+            let productImgContainer = document.createElement("div");
+            productImgContainer.classList.add("cart__item__img");
+            productArticle.appendChild(productImgContainer);
+
+            // Insertion de l'élément productImg
+            let productImg = document.createElement("img");
+            productImg.setAttribute("src", productDetails.imageUrl);
+            productImg.setAttribute("alt", productDetails.altTxt);
+            productImgContainer.appendChild(productImg);
+
+            // Insertion de l'élément productContent
+            let productContent = document.createElement("div");
+            productContent.classList.add("cart__item__content");
+            productArticle.appendChild(productContent);
+
+            // Insertion de l'élément productContentDescription
+            let productContentDescription = document.createElement("div");
+            productContentDescription.classList.add("cart__item__content__description");
+            productContent.appendChild(productContentDescription);
+
+            // Insertion de l'élément productName
+            let productName = document.createElement("h2");
+            productName.textContent = productDetails.name;
+            productContentDescription.appendChild(productName);
+
+            // Insertion de l'élément poductColorPicked
+            let productColorPicked = document.createElement("p");
+            productColorPicked.textContent = productColor;
+            productContentDescription.appendChild(productColorPicked);
+
+            // Insertion de l'élément productPrice (insertion de la valeur renvoyée par l'API, suivie du symbole €)
+            let productPrice = document.createElement("p");
+            productPrice.textContent = `${productDetails.price} €`;
+            productContentDescription.appendChild(productPrice);
+
+            // Insertion de l'élément productContentSettings
+            let productContentSettings = document.createElement("div");
+            productContentSettings.classList.add("cart__item__content__settings");
+            productContent.appendChild(productContentSettings);
+
+            // Insertion de l'élément productQuantitySettings
+            let productQuantitySettings = document.createElement("div");
+            productQuantitySettings.classList.add("cart__item__content__settings__quantity");
+            productContentSettings.appendChild(productQuantitySettings);
+
+            // Insertion de l'élément productQuantityPickedLabel
+            let productQuantityPickedLabel = document.createElement("p");
+            productQuantityPickedLabel.textContent = "Quantité : ";
+            productQuantitySettings.appendChild(productQuantityPickedLabel);
+
+            // Insertion de l'élément productQuantityPicked, ajout d'attributs, insertion de la quantité sélectionnée par l'utilisateur à l'étape précédente
+            let productQuantityPicked = document.createElement("input");
+            productQuantityPicked.setAttribute("type", "number");
+            productQuantityPicked.setAttribute("name", "itemQuantity");
+            productQuantityPicked.setAttribute("min", 1);
+            productQuantityPicked.setAttribute("max", 100);
+            productQuantityPicked.setAttribute("value", productQuantity);
+            productQuantityPicked.classList.add("itemQuantity");
+            productQuantitySettings.appendChild(productQuantityPicked);
+
+            // Insertion de l'élément productDelete
+            let productDelete = document.createElement("div");
+            productDelete.classList.add("cart__item__content__settings__delete");
+            productContentSettings.appendChild(productDelete);
+
+            // Insertion de l'élément productDeleteButton
+            let productDeleteButton = document.createElement("p");
+            productDeleteButton.classList.add("deleteItem");
+            productDeleteButton.textContent = "Supprimer";
+            productDelete.appendChild(productDeleteButton);
+
+            // Ajout du listener pour exécuter l'action removeFromCart lorsque le bouton de suppression est cliqué
+            productDeleteButton.addEventListener("click", function () {
+                removeFromCart(product);
+                alert("L'article a été retiré de votre panier");
+                document.location.reload();
+            });
+
+
+            // Utilisation de la fonction getNumberOfProduct pour afficher la quantité totale sur la page
+            totalProductsQuantity.textContent = getNumberOfProducts();
+
+            // Utilisation de la fonction getTotalPrice pour afficher le prix total sur la page
+            totalPrice.textContent = getTotalPrice(productDetails, productQuantity);
+
+            // Définition de la quantité actuelle prélevée comme ancienne quantité pour une utilisation ultérieure lors d'un événement de modification
+            let oldQuantity = Number(productQuantityPicked.value);
+
+            // ajout Eventlistener de quantité et définir l'action à exécuter
+            productQuantityPicked.addEventListener("change", () => {
+
+                // Définition de la nouvelle quantité de produit à l'aide de la fonction modifyQuantity - saveCart() lors de cette étape avec la fonction modifyQuantity
+                productQuantity = modifyQuantity(product,Number(productQuantityPicked.value));
+
+                // Utilisation de la fonction modifyTotalPrice pour calculer le nouveau prix de chaque article, en fonction de la variation de quantité
+                totalPrice.textContent = modifyTotalPrice(productDetails,oldQuantity,Number(productQuantityPicked.value));
+
+                // Définition de la (new) quantité actuelle prélevée comme ancienne quantité pour une utilisation ultérieure lors d'un événement de modification
+                oldQuantity = Number(productQuantityPicked.value);
+
+                // Récupération de la quantité totale dans le panier à l'aide de la fonction getNumberOfProduct
+                totalProductsQuantity.textContent = getNumberOfProducts();
+            });
         })
-    }
+        // Si la demande à l'API a échoué, création d'un message pour chaque produit pour informer l'utilisateur que quelque chose s'est mal passé
+        .catch((error) => {
+            console.log("Erreur dans le chargement du panier" + error);
+            let cartErrorMessage = document.createElement("h2");
+            cartErrorMessage.textContent = `L'article ${productName} de couleur ${productColor} que vous avez sélectionné semble inaccessible pour le moment.`;
+            cartErrorMessage.style.textAlign = "center";
+            cartErrorMessage.style.padding = "15px";
+            cartList.appendChild(cartErrorMessage);
+            // Modification du texte dans l'élément des totaux et suppression du formulaire de commande de la page
+            totalDisplay.textContent = "Il est impossible de procéder à la commande pour le moment. Nous vous invitons à réessayer ultérieurement";
+            totalDisplay.style.textAlign = "center";
+            orderForm.style.display = "none";
+        });
 }
 // Validation formulaire
 let form = document.querySelector(".cart__order__form")
-// RegExp - correspondances d'un texte avec un motif donné
-
-let nameRegExp = new RegExp(/^[a-zéèôöîïûùü' -]{2,50}$/g)
-let adressRegExp = new RegExp(/^[A-zÀ-ú0-9 ,.'\-]+$/)
-let cityRegExp = new RegExp(/^[0-9]{5} [A-zéèôöîïûùü' -]{2,50}$/gi)
-let emailRegExp = new RegExp(/^[a-zA-Z0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/)
+// RegExp - correspondances d'un texte avec un motif donne
+let firstNameRegExp = new RegExp(/[a-z A-Z]{2,50}$/)
+let nameRegExp = new RegExp(/[a-z A-Z]{2,50}$/)
+let adressRegExp = new RegExp(/[0-9 A-z ' ,.]{2,50}$/)
+let cityRegExp = new RegExp(/[0-9]{5}[a-z A-Z]{2,50}$/)
+let emailRegExp = new RegExp(/[a-z A-Z 0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/)
 // Prénom
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 form.firstName.addEventListener('change', function(e) {
     let value = e.target.value
-    if (nameRegExp.test(value)){
+    if (firstNameRegExp.test(value)){
         firstNameErrorMsg.innerText = ''
     } else {
-        firstNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et ' "
+        firstNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre prénom."
     }
 })
 // Nom
@@ -219,7 +281,7 @@ form.lastName.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         lastNameErrorMsg.innerText = ''
     } else {
-        lastNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et ' "
+        lastNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre nom."
     }
 })
 // Adresse
@@ -229,7 +291,7 @@ form.address.addEventListener('change', function(e) {
     if (adressRegExp.test(value)){
         adressErrorMsg.innerText = ''
     } else {
-        adressErrorMsg.innerText = "Merci de vérifier l'adresse, alphanumérique et sans caractères spéciaux"
+        adressErrorMsg.innerText = "Vous ne pouvez utiliser que des chiffres, lettres, espaces, - et ' "
     }
 })
 // Ville
@@ -239,7 +301,7 @@ form.city.addEventListener('change', function(e) {
     if (cityRegExp.test(value)){
         cityErrorMsg.innerText = ''
     } else {
-        cityErrorMsg.innerText = "Champ invalide, veuillez vérifier votre ville."
+        cityErrorMsg.innerText = "Veuillez respecter le format CODE POSTAL (5 CHIFFRES) suivi du nom de la VILLE. Exemple : 34000 Montpellier";
     }
 })
 // Email
@@ -249,7 +311,7 @@ form.email.addEventListener('change', function(e) {
     if (emailRegExp.test(value)){
         emailErrorMsg.innerText = ''
     } else {
-        emailErrorMsg.innerText = 'Champ invalide, veuillez vérifier votre adresse email.'
+        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email."
     }
 })
 // Passer commande
@@ -263,7 +325,7 @@ btnOrder.addEventListener('click', function(e) {
     let inputCity = document.getElementById('city')
     let inputEmail = document.getElementById('email')
 
-    if (basketStr == null) {
+    if (cart == null) {
         alert("Pour passer commande, veuillez ajouter des produits à votre panier")
         e.preventDefault()
     } else if (
@@ -286,8 +348,8 @@ btnOrder.addEventListener('click', function(e) {
         e.preventDefault()
     } else {
         productID = []
-        for (let m = 0; m < basket.products.length; m++) {
-            productID.push(basket.products[m].id)
+        for (let m = 0; m < cart.products; m++) {
+            productID.push(cart.products[m].id)
         }
         let order = {
             contact : {
@@ -299,7 +361,6 @@ btnOrder.addEventListener('click', function(e) {
             },
             products : productID
         }
-        // fetch, un moyen facile et logique de récupérer des ressources à travers le réseau de manière asynchrone
         fetch("http://localhost:3000/api/products/order", {
             // .post() permet d'envoyer des données
             method: 'POST',
@@ -313,7 +374,6 @@ btnOrder.addEventListener('click', function(e) {
             .then(async function (resultOrder) {
                 order = await resultOrder
                 document.location.href = "confirmation.html?orderId=" + order.orderId
-                // La méthode clear() de l'interface localStorage, lorsqu'elle est invoquée, vide toutes les clés stockées.
                 localStorage.clear()
             })
     }
