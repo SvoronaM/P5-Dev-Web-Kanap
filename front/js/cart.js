@@ -264,7 +264,6 @@ form.email.addEventListener('change', function(e) {
 })
 // Passer commande
 let btnOrder = document.querySelector('#order')
-
 btnOrder.addEventListener('click', function(e) {
     e.preventDefault()
     let inputFirstName = document.getElementById('firstName')
@@ -272,7 +271,6 @@ btnOrder.addEventListener('click', function(e) {
     let inputAddress = document.getElementById('address')
     let inputCity = document.getElementById('city')
     let inputEmail = document.getElementById('email')
-
     if (cart == null) {
         alert("Pour passer commande, veuillez ajouter des produits à votre panier")
         e.preventDefault()
