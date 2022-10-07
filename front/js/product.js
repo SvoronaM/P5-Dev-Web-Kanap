@@ -7,12 +7,10 @@ const itemPrice = document.getElementById("price");
 const itemDescription = document.getElementById("description");
 const itemColor = document.getElementById("colors");
 
-
 // Extraction de l'ID du produit depuis l'URL
 let params = new URL(document.location).searchParams;
 let productId = params.get("id");
 console.log(`Récupération de l'id du produit ayant enregistré le clic sur la page d'accueil : ${productId}`);
-
 
 //envoi d'une requête a l'API avec fetch
 fetch(`http://localhost:3000/api/products/${productId}`)
@@ -57,7 +55,6 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         productErrorMessage.style.padding = "15px";
         itemPresentation.appendChild(productErrorMessage);
     });
-
 // Crée une fonction pour récupérer la cart depuis le localStorage
 function getCart() {
     let cart = localStorage.getItem("cart");

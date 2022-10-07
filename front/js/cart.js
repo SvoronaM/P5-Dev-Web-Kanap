@@ -14,22 +14,7 @@ function getCart() {
         return JSON.parse(cart);
     }
 }
-// Crée une fonction pour ajouter les produits a cart
-/*function addToCart(product) {
-    // Récupération de la carte
-    let cart = getCart();
-    // Vérifie si il y a un produit avec l'id et la couleur identique dans la cart
-    let productFound = cart.find((p) => p.id === product.id && p.color === product.color);
-    // Si oui, modifie la quantité en ajoutens la nouvelle
-    if (productFound != undefined) {
-        productFound.quantity += product.quantity;
-        // Si non, ajoute le nouveau produit a cart
-    } else {
-        cart.push(product);
-    }
-    // Enregistre la carte modifié avec la fonction saveCart
-    saveCart(cart);
-}*/
+
 // Crée une fonction pour supprimer des produits de la cart
 function removeFromCart(product) {
     let cart = getCart();
@@ -62,35 +47,28 @@ function getTotalPrice(product, quantity) {
 
 // Crée une fonction pour modifié la quantité d'un produit
 function modifyQuantity(product, quantity) {
-
     let cart = getCart();
-
     // vérifie si un produit avec le meme id et la même couleur sont déja dans la carte
     let productFound = cart.find((p) => p.id == product.id && p.color == product.color);
-
     // Si oui, ajuste la nouvelle quantité
     if (productFound != undefined) {
         productFound.quantity = quantity;
-
         // si la nouvelle quantité <= 0, supprime le produit de la carte et recharge la page
         if(quantity <= 0){
             document.location.reload();
             removeFromCart(productFound);
             alert("L'article a été retiré de votre panier");
-
             // Si la nouvelle quantité > 100, envoi un message d'alert et recharge la page
         }else if(quantity > 100){
             document.location.reload();
             alert("La quantité est limitée à 100 pièces");
         }else{
-
             saveCart(cart);
         }
     }
 }
 // Crée une fonction pour modifié le prix total
 function modifyTotalPrice(product, oldQuantity, newQuantity) {
-
     // Si la nouvelle quantité est supérieur a l'ancienne, ajoute et retourne le prix total
     if (newQuantity > oldQuantity) {
         totalCartPrice += product.price * (newQuantity - oldQuantity);
@@ -103,21 +81,16 @@ function modifyTotalPrice(product, oldQuantity, newQuantity) {
 }
 // récupération de la cart avec la fonction getCart
 let cart = getCart();
-
 // Récupération des éléments dans une constante
 const cartList = document.getElementById("cart__items");
 const cartHeading = document.querySelector("h1");
 const totalDisplay = document.querySelector(".cart__price p");
 const orderForm = document.querySelector(".cart__order");
-
-
 // Récupération des éléments qui afficheront le prix total et la quantité de produit dans la cart
 let totalProductsQuantity = document.getElementById("totalQuantity");
 let totalPrice = document.getElementById("totalPrice");
 // Initialisation de totalCartPrice qui sera mis à jour ultérieurement avec le résultat renvoyé par la fonction getTotalPrice
 let totalCartPrice = 0;
-
-
 for (let product of cart) {
     // Pour chaque produit, récupération de l'identifiant, de la couleur, de la quantité et du nom
     let productId = product.id;
@@ -125,69 +98,56 @@ for (let product of cart) {
     let productQuantity = product.quantity;
     let productName = product.name;
     fetch(`http://localhost:3000/api/products/${productId}`)
-
         .then((response) => response.json())
         // Définir la réponse de l'API en tant que productDetails et définir l'action à exécuter pour chaque produit du panier
         .then((productDetails) => {
-
             // Insertion de l'élément article, définition des attributs, ajout de la classe cart__item et définition en tant qu'enfant de l'élément cartList
             let productArticle = document.createElement("article");
             productArticle.classList.add("cart__item");
             productArticle.setAttribute("data-id", productId);
             productArticle.setAttribute("data-color", productColor);
             cartList.appendChild(productArticle);
-
             // Insertion de l'élément productImgContainer
             let productImgContainer = document.createElement("div");
             productImgContainer.classList.add("cart__item__img");
             productArticle.appendChild(productImgContainer);
-
             // Insertion de l'élément productImg
             let productImg = document.createElement("img");
             productImg.setAttribute("src", productDetails.imageUrl);
             productImg.setAttribute("alt", productDetails.altTxt);
             productImgContainer.appendChild(productImg);
-
             // Insertion de l'élément productContent
             let productContent = document.createElement("div");
             productContent.classList.add("cart__item__content");
             productArticle.appendChild(productContent);
-
             // Insertion de l'élément productContentDescription
             let productContentDescription = document.createElement("div");
             productContentDescription.classList.add("cart__item__content__description");
             productContent.appendChild(productContentDescription);
-
             // Insertion de l'élément productName
             let productName = document.createElement("h2");
             productName.textContent = productDetails.name;
             productContentDescription.appendChild(productName);
-
             // Insertion de l'élément poductColorPicked
             let productColorPicked = document.createElement("p");
             productColorPicked.textContent = productColor;
             productContentDescription.appendChild(productColorPicked);
-
             // Insertion de l'élément productPrice (insertion de la valeur renvoyée par l'API, suivie du symbole €)
             let productPrice = document.createElement("p");
             productPrice.textContent = `${productDetails.price} €`;
             productContentDescription.appendChild(productPrice);
-
             // Insertion de l'élément productContentSettings
             let productContentSettings = document.createElement("div");
             productContentSettings.classList.add("cart__item__content__settings");
             productContent.appendChild(productContentSettings);
-
             // Insertion de l'élément productQuantitySettings
             let productQuantitySettings = document.createElement("div");
             productQuantitySettings.classList.add("cart__item__content__settings__quantity");
             productContentSettings.appendChild(productQuantitySettings);
-
             // Insertion de l'élément productQuantityPickedLabel
             let productQuantityPickedLabel = document.createElement("p");
             productQuantityPickedLabel.textContent = "Quantité : ";
             productQuantitySettings.appendChild(productQuantityPickedLabel);
-
             // Insertion de l'élément productQuantityPicked, ajout d'attributs, insertion de la quantité sélectionnée par l'utilisateur à l'étape précédente
             let productQuantityPicked = document.createElement("input");
             productQuantityPicked.setAttribute("type", "number");
@@ -197,47 +157,35 @@ for (let product of cart) {
             productQuantityPicked.setAttribute("value", productQuantity);
             productQuantityPicked.classList.add("itemQuantity");
             productQuantitySettings.appendChild(productQuantityPicked);
-
             // Insertion de l'élément productDelete
             let productDelete = document.createElement("div");
             productDelete.classList.add("cart__item__content__settings__delete");
             productContentSettings.appendChild(productDelete);
-
             // Insertion de l'élément productDeleteButton
             let productDeleteButton = document.createElement("p");
             productDeleteButton.classList.add("deleteItem");
             productDeleteButton.textContent = "Supprimer";
             productDelete.appendChild(productDeleteButton);
-
             // Ajout du listener pour exécuter l'action removeFromCart lorsque le bouton de suppression est cliqué
             productDeleteButton.addEventListener("click", function () {
                 removeFromCart(product);
                 alert("L'article a été retiré de votre panier");
                 document.location.reload();
             });
-
-
             // Utilisation de la fonction getNumberOfProduct pour afficher la quantité totale sur la page
             totalProductsQuantity.textContent = getNumberOfProducts();
-
             // Utilisation de la fonction getTotalPrice pour afficher le prix total sur la page
             totalPrice.textContent = getTotalPrice(productDetails, productQuantity);
-
             // Définition de la quantité actuelle prélevée comme ancienne quantité pour une utilisation ultérieure lors d'un événement de modification
             let oldQuantity = Number(productQuantityPicked.value);
-
             // ajout Eventlistener de quantité et définir l'action à exécuter
             productQuantityPicked.addEventListener("change", () => {
-
                 // Définition de la nouvelle quantité de produit à l'aide de la fonction modifyQuantity - saveCart() lors de cette étape avec la fonction modifyQuantity
                 productQuantity = modifyQuantity(product,Number(productQuantityPicked.value));
-
                 // Utilisation de la fonction modifyTotalPrice pour calculer le nouveau prix de chaque article, en fonction de la variation de quantité
                 totalPrice.textContent = modifyTotalPrice(productDetails,oldQuantity,Number(productQuantityPicked.value));
-
                 // Définition de la (new) quantité actuelle prélevée comme ancienne quantité pour une utilisation ultérieure lors d'un événement de modification
                 oldQuantity = Number(productQuantityPicked.value);
-
                 // Récupération de la quantité totale dans le panier à l'aide de la fonction getNumberOfProduct
                 totalProductsQuantity.textContent = getNumberOfProducts();
             });

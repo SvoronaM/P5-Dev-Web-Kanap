@@ -4,7 +4,6 @@ let str = window.location.href
 let url = new URL(str)
 // url.searchParams.get renvoie la première valeur associée au paramètre de recherche donné(id).
 let idOrderURL = url.searchParams.get("orderId")
-
 //Affichage du numéro de commande, retour id avec querySelector
 let orderIdNumberElt = document.querySelector('#orderId')
 orderIdNumberElt.innerText = idOrderURL
