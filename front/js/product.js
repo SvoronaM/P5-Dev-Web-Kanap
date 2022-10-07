@@ -6,12 +6,10 @@ const itemName = document.getElementById("title");
 const itemPrice = document.getElementById("price");
 const itemDescription = document.getElementById("description");
 const itemColor = document.getElementById("colors");
-
 // Extraction de l'ID du produit depuis l'URL
 let params = new URL(document.location).searchParams;
 let productId = params.get("id");
 console.log(`Récupération de l'id du produit ayant enregistré le clic sur la page d'accueil : ${productId}`);
-
 //envoi d'une requête a l'API avec fetch
 fetch(`http://localhost:3000/api/products/${productId}`)
     // Si la requête est validé, retourne la réponse en JSON
@@ -23,19 +21,15 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         productImg.setAttribute("src", productDetails.imageUrl);
         productImg.setAttribute("alt", productDetails.altTxt);
         itemImgContainer.appendChild(productImg);
-
         // Insertion du nom
         let productName = productDetails.name;
         itemName.textContent = productName;
-
         // Insertion du prix
         let productPrice = productDetails.price;
         itemPrice.textContent = productPrice;
-
         // Insertion de la description
         let productDescription = productDetails.description;
         itemDescription.textContent = productDescription;
-
         // Insertion des couleurs, parcoure le tableau renvoyé par l'API pour insérer dynamiquement des options de couleur (colorOption) dans l'élément itemColor (.color)
         let productColors = productDetails.colors;
         for (i = 0; i < productColors.length; i++) {
@@ -55,7 +49,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         productErrorMessage.style.padding = "15px";
         itemPresentation.appendChild(productErrorMessage);
     });
-// Crée une fonction pour récupérer la cart depuis le localStorage
+// Une fonction pour récupérer la cart depuis le localStorage
 function getCart() {
     let cart = localStorage.getItem("cart");
     // Si le localStorage est vide, retourne un tableau vide
@@ -66,7 +60,7 @@ function getCart() {
         return JSON.parse(cart);
     }
 }
-// Crée une fonction pour ajouter les produits a cart
+// Une fonction pour ajouter les produits a cart
 function addToCart(product) {
     // Récupération de la carte
     let cart = getCart();
@@ -88,7 +82,6 @@ const addToCartBtn = document.getElementById("addToCart");
 // Récupération des quantité et des couleurs dans des variables
 let quantity = document.getElementById("quantity");
 let color = document.getElementById("colors");
-
 // Ajout du listener
 addToCartBtn.addEventListener("click", () => {
     // Définition des valeurs de colorPicked et de quantityPicked
