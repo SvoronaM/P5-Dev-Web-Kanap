@@ -199,8 +199,16 @@ for (let product of cart) {
             orderForm.style.display = "none";
         });
 }
-// Validation formulaire
+// Modification de la structure lorsque que la Cart est vide
+// Si le panier est vide : modification de l'en-tête, du texte dans l'élément totaux et suppression du bon de commande de la page
+if (cart.length === 0) {
+    cartHeading.textContent = "Votre panier est vide";
+    totalDisplay.innerText = "Consulter notre catalogue";
+    totalDisplay.style.textAlign = "center";
+}
+// Récupération des éléments du formulaire et du bouton d'envoi
 let form = document.querySelector(".cart__order__form");
+let submitButton = document.querySelector("#order");
 // RegExp - correspondances d'un texte avec un motif donne
 let firstNameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
 let nameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
