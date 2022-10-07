@@ -2,8 +2,7 @@
 function saveCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
 }
-
-// Crée une fonction pour récupérer la cart depuis le localStorage
+// Fonction pour récupérer la cart depuis le localStorage
 function getCart() {
     let cart = localStorage.getItem("cart");
     // Si le localStorage est vide, retourne un tableau vide
@@ -14,16 +13,14 @@ function getCart() {
         return JSON.parse(cart);
     }
 }
-
-// Crée une fonction pour supprimer des produits de la cart
+// Fonction pour supprimer des produits de la cart
 function removeFromCart(product) {
     let cart = getCart();
     // Filtrer la carte pour garder uniquement les produits avec une id différentes ou les produits avec une différentes couleur et la même id
     cart = cart.filter((p) => p.id != product.id || p.color != product.color);
     saveCart(cart);
 }
-
-// Crée une fonction pour récuperer le prix total des produits dans la cart
+// Fonction pour récuperer le prix total des produits dans la cart
 function getNumberOfProducts() {
     let cart = getCart();
     // Définie numberOfProduct = 0
@@ -36,16 +33,14 @@ function getNumberOfProducts() {
     // Retourne le nombre total de produit
     return numberOfProduct;
 }
-
-// Crée une fonction pour avoir le prix total de la cart
+// Fonction pour avoir le prix total de la cart
 function getTotalPrice(product, quantity) {
     // Pour chaque produit dans la carte, ajoute le prix total a totalCartPrice (product.price * quantité)
     totalCartPrice += product.price * quantity;
     // Retourne le prix total de la carte
     return totalCartPrice;
 }
-
-// Crée une fonction pour modifié la quantité d'un produit
+// Fonction pour modifié la quantité d'un produit
 function modifyQuantity(product, quantity) {
     let cart = getCart();
     // vérifie si un produit avec le meme id et la même couleur sont déja dans la carte
@@ -67,7 +62,7 @@ function modifyQuantity(product, quantity) {
         }
     }
 }
-// Crée une fonction pour modifié le prix total
+// Fonction pour modifié le prix total
 function modifyTotalPrice(product, oldQuantity, newQuantity) {
     // Si la nouvelle quantité est supérieur a l'ancienne, ajoute et retourne le prix total
     if (newQuantity > oldQuantity) {
@@ -79,7 +74,7 @@ function modifyTotalPrice(product, oldQuantity, newQuantity) {
         return totalCartPrice;
     }
 }
-// récupération de la cart avec la fonction getCart
+// Récupération de la cart avec la fonction getCart
 let cart = getCart();
 // Récupération des éléments dans une constante
 const cartList = document.getElementById("cart__items");
