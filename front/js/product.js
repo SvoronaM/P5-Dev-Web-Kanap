@@ -44,7 +44,8 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         console.log("Il y a eu une erreur dans le chargement du produit sur le site." + error);
         itemPresentation.removeChild(itemContent);
         let productErrorMessage = document.createElement("h2");
-        productErrorMessage.textContent = "Nous rencontrons des difficultés techniques pour afficher l'article que vous avez sélectionné. Nos équipes sont à l'oeuvre pour résoudre ce problème dans les plus brefs délais. Nous vous invitons à réessayer ultérieurement et nous excusons pour la gêne occasionnée.";
+        productErrorMessage.textContent = "Nous rencontrons des difficultés techniques pour afficher l'article que vous avez sélectionné. " +
+            "Nos équipes sont à l'oeuvre pour résoudre ce problème dans les plus brefs délais. Nous vous invitons à réessayer ultérieurement et nous excusons pour la gêne occasionnée.";
         productErrorMessage.style.textAlign = "center";
         productErrorMessage.style.padding = "15px";
         itemPresentation.appendChild(productErrorMessage);
