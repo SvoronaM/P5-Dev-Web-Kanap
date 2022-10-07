@@ -200,75 +200,75 @@ for (let product of cart) {
         });
 }
 // Validation formulaire
-let form = document.querySelector(".cart__order__form")
+let form = document.querySelector(".cart__order__form");
 // RegExp - correspondances d'un texte avec un motif donne
-let firstNameRegExp = new RegExp(/[a-z A-Z]{2,50}$/)
-let nameRegExp = new RegExp(/[a-z A-Z]{2,50}$/)
-let adressRegExp = new RegExp(/[0-9 A-z ' ,.]{2,50}$/)
-let cityRegExp = new RegExp(/[0-9]{5}[a-z A-Z]{2,50}$/)
-let emailRegExp = new RegExp(/[a-z A-Z 0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/)
+let firstNameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
+let nameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
+let adressRegExp = new RegExp(/[0-9 A-z ' ,.]{2,50}$/);
+let cityRegExp = new RegExp(/[0-9]{5}[a-z A-Z]{2,50}$/);
+let emailRegExp = new RegExp(/[a-z A-Z 0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/);
 // Prénom
-let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
+let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg');
 form.firstName.addEventListener('change', function(e) {
-    let value = e.target.value
+    let value = e.target.value;
     if (firstNameRegExp.test(value)){
-        firstNameErrorMsg.innerText = ''
+        firstNameErrorMsg.innerText = '';
     } else {
-        firstNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre prénom."
+        firstNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre prénom.";
     }
-})
+});
 // Nom
-let lastNameErrorMsg = form.lastName.nextElementSibling
+let lastNameErrorMsg = form.lastName.nextElementSibling;
 form.lastName.addEventListener('change', function(e) {
-    let value = e.target.value
+    let value = e.target.value;
     if (nameRegExp.test(value)){
-        lastNameErrorMsg.innerText = ''
+        lastNameErrorMsg.innerText = '';
     } else {
-        lastNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre nom."
+        lastNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre nom.";
     }
-})
+});
 // Adresse
-let adressErrorMsg = document.querySelector('#addressErrorMsg')
+let adressErrorMsg = document.querySelector('#addressErrorMsg');
 form.address.addEventListener('change', function(e) {
-    let value = e.target.value
+    let value = e.target.value;
     if (adressRegExp.test(value)){
-        adressErrorMsg.innerText = ''
+        adressErrorMsg.innerText = '';
     } else {
-        adressErrorMsg.innerText = "Vous ne pouvez utiliser que des chiffres, lettres, espaces, - et ' "
+        adressErrorMsg.innerText = "Vous ne pouvez utiliser que des chiffres, lettres, espaces, - et ' ";
     }
-})
+});
 // Ville
-let cityErrorMsg = document.querySelector('#cityErrorMsg')
+let cityErrorMsg = document.querySelector('#cityErrorMsg');
 form.city.addEventListener('change', function(e) {
-    let value = e.target.value
+    let value = e.target.value;
     if (cityRegExp.test(value)){
-        cityErrorMsg.innerText = ''
+        cityErrorMsg.innerText = '';
     } else {
         cityErrorMsg.innerText = "Veuillez respecter le format CODE POSTAL (5 CHIFFRES) suivi du nom de la VILLE. Exemple : 34000 Montpellier";
     }
-})
+});
 // Email
-let emailErrorMsg = document.querySelector('#emailErrorMsg')
+let emailErrorMsg = document.querySelector('#emailErrorMsg');
 form.email.addEventListener('change', function(e) {
-    let value = e.target.value
+    let value = e.target.value;
     if (emailRegExp.test(value)){
-        emailErrorMsg.innerText = ''
+        emailErrorMsg.innerText = '';
     } else {
-        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email."
+        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email.";
     }
-})
+});
 // Passer commande
-let btnOrder = document.querySelector('#order')
+let btnOrder = document.querySelector('#order');
 btnOrder.addEventListener('click', function(e) {
-    e.preventDefault()
-    let inputFirstName = document.getElementById('firstName')
-    let inputLastName = document.getElementById('lastName')
-    let inputAddress = document.getElementById('address')
-    let inputCity = document.getElementById('city')
-    let inputEmail = document.getElementById('email')
-    if (cart == null) {
-        alert("Pour passer commande, veuillez ajouter des produits à votre panier")
-        e.preventDefault()
+    e.preventDefault();
+    let inputFirstName = document.getElementById('firstName');
+    let inputLastName = document.getElementById('lastName');
+    let inputAddress = document.getElementById('address');
+    let inputCity = document.getElementById('city');
+    let inputEmail = document.getElementById('email');
+    if (cart.products == null) {
+        alert("Pour passer commande, veuillez ajouter des produits à votre panier");
+        e.preventDefault();
     } else if (
         firstName.value === ""
         || lastName.value === ""
@@ -276,7 +276,7 @@ btnOrder.addEventListener('click', function(e) {
         || city.value === ""
         || email.value === ""
     ) {
-        alert("Vous devez renseigner vos coordonnées pour passer la commande !")
+        alert("Vous devez renseigner vos coordonnées pour passer la commande !");
         e.preventDefault();
     } else if (
         nameRegExp.test(inputFirstName.value) ==  false
@@ -285,10 +285,10 @@ btnOrder.addEventListener('click', function(e) {
         || nameRegExp.test(inputCity.value) ==  false
         || emailRegExp.test(inputEmail.value) ==  false
     ) {
-        alert("Vérifiez vos coordonnées pour passer la commande !")
-        e.preventDefault()
+        alert("Vérifiez vos coordonnées pour passer la commande !");
+        e.preventDefault();
     } else {
-        productID = []
+        productID = [];
         for (let m = 0; m < cart.products; m++) {
             productID.push(cart.products[m].id)
         }
@@ -313,9 +313,9 @@ btnOrder.addEventListener('click', function(e) {
         })
             .then((response) => response.json())
             .then(async function (resultOrder) {
-                order = await resultOrder
-                document.location.href = "confirmation.html?orderId=" + order.orderId
-                localStorage.clear()
+                order = await resultOrder;
+                document.location.href = "confirmation.html?orderId=" + order.orderId;
+                localStorage.clear();
             })
     }
 })
