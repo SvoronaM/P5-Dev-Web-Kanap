@@ -269,6 +269,7 @@ form.email.addEventListener('change', function(e) {
 // Passer commande
 let btnOrder = document.querySelector('#order');
 btnOrder.addEventListener('click', function(e) {
+    // si l'évènement n'est pas explicitement géré, l'action par défaut ne devrait pas être exécutée comme elle l'est normalement.
     e.preventDefault();
     let inputFirstName = document.getElementById('firstName');
     let inputLastName = document.getElementById('lastName');
@@ -323,6 +324,7 @@ btnOrder.addEventListener('click', function(e) {
             .then((response) => response.json())
             // Définition de la réponse de l'API en tant que resultOrder et définition de l'action à exécuter
             .then(async function (resultOrder) {
+                // await permet d'attendre la résolution d'une promesse
                 order = await resultOrder;
                 document.location.href = "confirmation.html?orderId=" + order.orderId;
                 //Vider la localStorage
