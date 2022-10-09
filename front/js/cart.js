@@ -203,8 +203,9 @@ for (let product of cart) {
 // Si le panier est vide : modification de l'en-tête, du texte dans l'élément totaux et suppression du bon de commande de la page
 if (cart.length === 0) {
     cartHeading.textContent = "Votre panier est vide";
-    totalDisplay.innerText = "Consulter notre catalogue";
+    totalDisplay.innerHTML = "Consulter notre catalogue";
     totalDisplay.style.textAlign = "center";
+    orderForm.style.display = "none";
 }
 // Récupération des éléments du formulaire et du bouton d'envoi
 let form = document.querySelector(".cart__order__form");
@@ -274,10 +275,7 @@ btnOrder.addEventListener('click', function(e) {
     let inputAddress = document.getElementById('address');
     let inputCity = document.getElementById('city');
     let inputEmail = document.getElementById('email');
-    if (cart == null) {
-        alert("Pour passer commande, veuillez ajouter des produits à votre panier");
-        e.preventDefault();
-    } else if (
+     if (
         firstName.value === ""
         || lastName.value === ""
         || address.value === ""
@@ -298,7 +296,7 @@ btnOrder.addEventListener('click', function(e) {
     } else {
         productID = [];
         for (let m = 0; m < cart.products; m++) {
-            productID.push(cart.products[m].id)
+            productID.push(cart.products[m].id);
         }
         let order = {
             contact : {
@@ -326,4 +324,4 @@ btnOrder.addEventListener('click', function(e) {
                 localStorage.clear();
             })
     }
-})
+});
