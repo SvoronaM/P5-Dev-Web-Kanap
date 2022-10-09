@@ -203,7 +203,7 @@ for (let product of cart) {
 // Si le panier est vide : modification de l'en-tête, du texte dans l'élément totaux et suppression du bon de commande de la page
 if (cart.length === 0) {
     cartHeading.textContent = "Votre panier est vide";
-    totalDisplay.innerHTML = "Consulter notre catalogue";
+    totalDisplay.innerText = "Consulter notre catalogue";
     totalDisplay.style.textAlign = "center";
     orderForm.style.display = "none";
 }
@@ -298,6 +298,7 @@ btnOrder.addEventListener('click', function(e) {
         for (let m = 0; m < cart.products; m++) {
             productID.push(cart.products[m].id);
         }
+         // Création de l'objet order qui sera envoyé à l'API
         let order = {
             contact : {
                 firstName: inputFirstName.value,
@@ -308,6 +309,7 @@ btnOrder.addEventListener('click', function(e) {
             },
             products : productID
         }
+         // Envoi de l'objet order et du tableau products à l'API
         fetch("http://localhost:3000/api/products/order", {
             // .post() permet d'envoyer des données
             method: 'POST',
@@ -317,10 +319,13 @@ btnOrder.addEventListener('click', function(e) {
                 'Content-Type': 'application/json'
             },
         })
+            // Obtenir la réponse au format JSON
             .then((response) => response.json())
+            // Définition de la réponse de l'API en tant que resultOrder et définition de l'action à exécuter
             .then(async function (resultOrder) {
                 order = await resultOrder;
                 document.location.href = "confirmation.html?orderId=" + order.orderId;
+                //Vider la localStorage
                 localStorage.clear();
             })
     }
