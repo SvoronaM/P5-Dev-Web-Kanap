@@ -223,7 +223,7 @@ form.firstName.addEventListener('change', function(e) {
     if (firstNameRegExp.test(value)){
         firstNameErrorMsg.innerText = '';
     } else {
-        firstNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre prénom.";
+        firstNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et '";
     }
 });
 // Nom
@@ -233,7 +233,7 @@ form.lastName.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         lastNameErrorMsg.innerText = '';
     } else {
-        lastNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre nom.";
+        lastNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et '";
     }
 });
 // Adresse
@@ -263,7 +263,7 @@ form.email.addEventListener('change', function(e) {
     if (emailRegExp.test(value)){
         emailErrorMsg.innerText = '';
     } else {
-        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email.";
+        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email.Exemples d'adresses valides : xyz@example.com";
     }
 });
 // Passer commande
