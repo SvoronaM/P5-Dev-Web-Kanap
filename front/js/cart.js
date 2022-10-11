@@ -211,10 +211,10 @@ if (cart.length === 0) {
 let form = document.querySelector(".cart__order__form");
 let submitButton = document.querySelector("#order");
 // RegExp - correspondances d'un texte avec un motif donne
-let firstNameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
-let nameRegExp = new RegExp(/[a-z A-Z]{2,50}$/);
-let adressRegExp = new RegExp(/[0-9 A-z ' ,.]{2,50}$/);
-let cityRegExp = new RegExp(/[0-9]{5}[a-z A-Z]{2,50}$/);
+let firstNameRegExp = new RegExp(/[^0-9][a-zéèôöîïûùü A-Z ' ,.-]{2,50}$/);
+let nameRegExp = new RegExp(/[^0-9][a-zéèôöîïûùü A-Z ' ,.-]{2,50}$/);
+let adressRegExp = new RegExp(/[0-9 A-zéèôöîïûùü ' ,.]{2,50}$/);
+let cityRegExp = new RegExp(/[0-9]{5}[a-zéèôöîïûùü A-Z]{2,50}$/);
 let emailRegExp = new RegExp(/[a-z A-Z 0-9_. -]+@[a-zA-Z.-]+[.]{1}[a-z]{2,10}$/);
 // Prénom
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg');
@@ -223,7 +223,7 @@ form.firstName.addEventListener('change', function(e) {
     if (firstNameRegExp.test(value)){
         firstNameErrorMsg.innerText = '';
     } else {
-        firstNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et '";
+        firstNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre prénom. Vous ne pouvez utiliser que des lettres, espaces, - et '";
     }
 });
 // Nom
@@ -233,7 +233,7 @@ form.lastName.addEventListener('change', function(e) {
     if (nameRegExp.test(value)){
         lastNameErrorMsg.innerText = '';
     } else {
-        lastNameErrorMsg.innerText = "Vous ne pouvez utiliser que des lettres, espaces, - et '";
+        lastNameErrorMsg.innerText = "Champ invalide, veuillez vérifier votre nom. Vous ne pouvez utiliser que des lettres, espaces, - et '";
     }
 });
 // Adresse
@@ -263,7 +263,7 @@ form.email.addEventListener('change', function(e) {
     if (emailRegExp.test(value)){
         emailErrorMsg.innerText = '';
     } else {
-        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email.Exemples d'adresses valides : xyz@example.com";
+        emailErrorMsg.innerText = "Champ invalide, veuillez vérifier votre adresse email.";
     }
 });
 // Passer commande
@@ -276,7 +276,7 @@ btnOrder.addEventListener('click', function(e) {
     let inputAddress = document.getElementById('address');
     let inputCity = document.getElementById('city');
     let inputEmail = document.getElementById('email');
-     if (
+    if (
         firstName.value === ""
         || lastName.value === ""
         || address.value === ""
@@ -299,7 +299,7 @@ btnOrder.addEventListener('click', function(e) {
         for (let m = 0; m < cart.products; m++) {
             productID.push(cart.products[m].id);
         }
-         // Création de l'objet order qui sera envoyé à l'API
+        // Création de l'objet order qui sera envoyé à l'API
         let order = {
             contact : {
                 firstName: inputFirstName.value,
@@ -310,7 +310,7 @@ btnOrder.addEventListener('click', function(e) {
             },
             products : productID
         }
-         // Envoi de l'objet order et du tableau products à l'API
+        // Envoi de l'objet order et du tableau products à l'API
         fetch("http://localhost:3000/api/products/order", {
             // .post() permet d'envoyer des données
             method: 'POST',
